@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class DefaultEngine implements DrawingEngine {
 
     private final ArrayList<Shape> shapes = new ArrayList<>();
-    private Graphics canvas = null;
-
-    public DefaultEngine() {}
+    private final Graphics canvas;
 
     public DefaultEngine(Graphics canvas) {
         this.canvas = canvas;
@@ -18,16 +16,14 @@ public class DefaultEngine implements DrawingEngine {
     public void addShape(Shape shape) {
         shapes.add(shape);
 
-        if(this.canvas != null)
-            refresh(this.canvas);
+        refresh(this.canvas);
     }
 
     @Override
     public void removeShape(Shape shape) {
-        shapes.removeIf((currentShape) -> currentShape.equals(shape));
+        shapes.removeIf(currentShape -> currentShape.getKey().equals(shape.getKey()));
 
-        if(this.canvas != null)
-            refresh(this.canvas);
+        refresh(this.canvas);
     }
 
     @Override
@@ -37,9 +33,21 @@ public class DefaultEngine implements DrawingEngine {
 
     @Override
     public void refresh(Graphics canvas) {
+        canvas.clearRect(0, 0, 9999, 9999);
+
         for (Shape shape : shapes) {
             shape.draw(canvas);
         }
+    }
+
+    public Integer getShapeIndexAtPoint(Point point)
+    {
+        for (int i=0; i<shapes.size(); i++) {
+            if(shapes.get(i).isPointInside(point))
+                return i;
+        }
+
+        return null;
     }
 
     public void refresh() throws NullPointerException {

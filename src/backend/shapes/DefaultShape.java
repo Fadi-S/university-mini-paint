@@ -8,6 +8,8 @@ import java.util.Map;
 
 public abstract class DefaultShape implements Shape {
 
+    protected final String seed = String.valueOf((int) (Math.random() * 100));
+
     private Color color;
     private Color fillColor;
     private Point point;
@@ -76,11 +78,13 @@ public abstract class DefaultShape implements Shape {
 
     @Override
     public Color getFillColor() {
-        return this.fillColor == null ? Color.WHITE : this.fillColor;
+        return this.fillColor == null ? Color.white : this.fillColor;
     }
 
     @Override
     public abstract void draw(Graphics canvas);
+
+    public abstract boolean isPointInside(Point point);
 
     public abstract String[] properties();
 }

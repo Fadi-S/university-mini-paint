@@ -13,6 +13,19 @@ public class Square extends Rectangle implements Shape {
     }
 
     @Override
+    public boolean isPointInside(Point point) {
+        set("height", get("side"));
+        set("width", get("side"));
+
+        return super.isPointInside(point);
+    }
+
+    @Override
+    public String getKey() {
+        return "square-" + seed;
+    }
+
+    @Override
     public void draw(Graphics canvas) {
         set("height", get("side"));
         set("width", get("side"));

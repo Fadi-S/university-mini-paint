@@ -18,5 +18,9 @@ public interface Shape {
     void setFillColor(Color color);
     Color getFillColor();
 
+    boolean isPointInside(Point point);
+
+    String getKey();
+
     void draw(Graphics canvas);
 }
