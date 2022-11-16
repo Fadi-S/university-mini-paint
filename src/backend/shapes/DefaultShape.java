@@ -78,7 +78,7 @@ public abstract class DefaultShape implements Shape {
 
     @Override
     public Color getFillColor() {
-        return this.fillColor == null ? Color.white : this.fillColor;
+        return this.fillColor;
     }
 
     @Override

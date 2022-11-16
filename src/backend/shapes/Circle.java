@@ -31,16 +31,27 @@ public class Circle extends DefaultShape implements Shape {
 
     @Override
     public void draw(Graphics canvas) {
+        canvas.setColor(null);
+        if(get("colorize") == 1) {
+            canvas.setColor(getColor() == null ? getFillColor() : getColor());
+        }
+
         Point point = getPosition();
         int radius = get("radius").intValue();
         int diameter = radius * 2;
 
-        canvas.setColor(getColor());
-
-        canvas.drawOval(
-                point.x - radius,
-                point.y - radius,
-                diameter, diameter
-        );
+        if(getColor() != null) {
+            canvas.drawOval(
+                    point.x - radius,
+                    point.y - radius,
+                    diameter, diameter
+            );
+        }else  {
+            canvas.fillOval(
+                    point.x - radius,
+                    point.y - radius,
+                    diameter, diameter
+            );
+        }
     }
 }

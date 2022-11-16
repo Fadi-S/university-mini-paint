@@ -1,15 +1,23 @@
 package backend;
 
+import backend.events.ShapesChangedListener;
+
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DefaultEngine implements DrawingEngine {
+
+public class Engine implements DrawingEngine {
 
     private final ArrayList<Shape> shapes = new ArrayList<>();
+    private final ArrayList<ShapesChangedListener> listeners = new ArrayList<>();
     private final Graphics canvas;
 
-    public DefaultEngine(Graphics canvas) {
+    public Engine(Graphics canvas) {
         this.canvas = canvas;
+    }
+
+    public void addListener(ShapesChangedListener toAdd) {
+        listeners.add(toAdd);
     }
 
     @Override
@@ -17,6 +25,8 @@ public class DefaultEngine implements DrawingEngine {
         shapes.add(shape);
 
         refresh(this.canvas);
+
+        listeners.forEach(listener -> listener.shapeAdded(shape));
     }
 
     @Override
@@ -24,6 +34,8 @@ public class DefaultEngine implements DrawingEngine {
         shapes.removeIf(currentShape -> currentShape.getKey().equals(shape.getKey()));
 
         refresh(this.canvas);
+
+        listeners.forEach(listener -> listener.shapeRemoved(shape));
     }
 
     @Override
@@ -52,7 +64,7 @@ public class DefaultEngine implements DrawingEngine {
 
     public void refresh() throws NullPointerException {
         if(this.canvas == null) {
-            throw new NullPointerException("Canvas must no be null");
+            throw new NullPointerException("Canvas must not be null");
         }
 
         refresh(this.canvas);

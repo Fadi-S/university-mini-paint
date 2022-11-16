@@ -1,12 +1,14 @@
 package frontend;
 
-import backend.DefaultEngine;
+import backend.Engine;
 import backend.Shape;
+import backend.events.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -21,8 +23,9 @@ public class Application {
     private JPanel canvas;
     private JButton deleteBtn;
     private JLabel selectedShapeLabel;
+    private JComboBox<String> shapesSelectBox;
 
-    private DefaultEngine engine;
+    private final Engine engine;
 
     Shape selectedShape;
 
@@ -37,72 +40,99 @@ public class Application {
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        engine = new DefaultEngine(canvas.getGraphics());
+        frame.setResizable(false);
+
+        engine = new Engine(canvas.getGraphics());
+        engine.addListener(new ShapesChangedListener() {
+            @Override
+            public void shapeAdded(Shape shape) {
+                shapesSelectBox.addItem(shape.getKey());
+            }
+            @Override
+            public void shapeRemoved(Shape shape) {
+                shapesSelectBox.removeItem(shape.getKey());
+
+                select(null);
+            }
+        });
+
+        shapesSelectBox.addItemListener(event -> {
+            if (event.getStateChange() != ItemEvent.SELECTED) {
+                return;
+            }
+
+            String shapeKey = (String) event.getItem();
+
+            Shape selectShape = null;
+            for (Shape shape : engine.getShapes()) {
+                if(shape.getKey().equals(shapeKey)) {
+                    selectShape = shape;
+                    break;
+                }
+            }
+            if(selectShape == null) return;
+
+            select(selectShape);
+        });
 
         circleBtn.addActionListener((e) -> create(new Circle()));
-
         lineSegmentBtn.addActionListener((e) -> create(new LineSegment()));
-
         squareBtn.addActionListener((e) -> create(new Square()));
-
         rectangleBtn.addActionListener((e) -> create(new Rectangle()));
 
         deleteBtn.addActionListener((e) -> {
             if(selectedShape == null) {
                 JOptionPane.showMessageDialog(frame, "No shape selected");
-
                 return;
-            };
-
+            }
             engine.removeShape(selectedShape);
-
-            selectedShape = null;
-            selectedShapeLabel.setText("No Shape selected");
         });
 
         colorizeBtn.addActionListener((e) -> {
             if(selectedShape == null) {
                 JOptionPane.showMessageDialog(frame, "No shape selected");
-
                 return;
             }
 
-            selectedShape.setColor(Color.red);
+            selectedShape.setColor(Color.decode("#4C5CFF"));
+            selectedShape.setFillColor(Color.decode("#3ECAFF"));
 
             engine.refresh();
         });
 
         canvas.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
             public void mousePressed(MouseEvent e) {
-                Integer shapeIndex = engine.getShapeIndexAtPoint(e.getPoint());
-
-                if(shapeIndex == null) {
-                    selectedShape = null;
-
-                    selectedShapeLabel.setText("No shape selected");
-
-                    engine.refresh();
-
+                if(! SwingUtilities.isLeftMouseButton(e)) {
                     return;
                 }
-
-                selectedShape = engine.getShapes()[shapeIndex];
-
-                selectedShapeLabel.setText("Shape: " + selectedShape.getKey());
-
-                engine.refresh();
-
-                drawCenterPoint();
+                Integer shapeIndex = engine.getShapeIndexAtPoint(e.getPoint());
+                select(shapeIndex == null ? null : engine.getShapes()[shapeIndex]);
             }
+            public void mouseClicked(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
             public void mouseEntered(MouseEvent e) {}
             public void mouseExited(MouseEvent e) {}
         });
+    }
 
-        frame.setResizable(false);
+    private void select(Shape shape) {
+        if(shape == null) {
+            selectedShape = null;
+            selectedShapeLabel.setText("No shape selected");
+            shapesSelectBox.setSelectedItem(null);
+            engine.refresh();
+            return;
+        }
+
+        selectedShape = shape;
+        selectedShapeLabel.setText("Shape: " + selectedShape.getKey());
+
+        if(!shape.getKey().equals(shapesSelectBox.getSelectedItem()))
+            shapesSelectBox.setSelectedItem(shape.getKey());
+
+        engine.refresh();
+        drawCenterPoint();
     }
 
     private void drawCenterPoint()
@@ -113,12 +143,11 @@ public class Application {
     }
 
     private void create(DefaultShape shape) {
-        collectProperties(shape);
-
-        engine.addShape(shape);
+        if(collectProperties(shape))
+            engine.addShape(shape);
     }
 
-    private void collectProperties(DefaultShape shape)
+    private boolean collectProperties(DefaultShape shape)
     {
         String[] props = shape.properties();
 
@@ -126,15 +155,18 @@ public class Application {
         while (i < props.length) {
             String property = props[i];
             String value = JOptionPane.showInputDialog("Enter " + property + ": ");
+            if(value == null) {
+                return false;
+            }
+
             try {
-                if(value == null || value.isBlank()) {
-                    throw new NumberFormatException();
-                }
                 shape.set(property, Double.parseDouble(value));
                 i++;
             }catch (Exception error) {
                 JOptionPane.showMessageDialog(frame, "Please enter a number!");
             }
         }
+
+        return true;
     }
 }

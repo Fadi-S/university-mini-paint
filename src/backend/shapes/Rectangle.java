@@ -8,13 +8,21 @@ public class Rectangle extends DefaultShape implements Shape {
 
     @Override
     public void draw(Graphics canvas) {
+        canvas.setColor(null);
+        if(get("colorize") == 1) {
+            canvas.setColor(getColor() == null ? getFillColor() : getColor());
+        }
+
         Point point = getPosition();
-        canvas.setColor(getColor());
 
         int height = get("height").intValue();
         int width = get("width").intValue();
 
-        canvas.drawRect(point.x - (width/2), point.y - (height/2), width, height);
+        if(getColor() != null) {
+            canvas.drawRect(point.x - (width / 2), point.y - (height / 2), width, height);
+        }else {
+            canvas.fillRect(point.x - (width/2), point.y - (height/2), width, height);
+        }
     }
 
     @Override
