@@ -7,22 +7,19 @@ import java.awt.*;
 public class Rectangle extends DefaultShape implements Shape {
 
     @Override
-    public void draw(Graphics canvas) {
-        canvas.setColor(null);
-        if(get("colorize") == 1) {
-            canvas.setColor(getColor() == null ? getFillColor() : getColor());
-        }
-
+    protected void drawOutline(Graphics canvas) {
         Point point = getPosition();
-
         int height = get("height").intValue();
         int width = get("width").intValue();
+        canvas.drawRect(point.x - (width / 2), point.y - (height / 2), width, height);
+    }
 
-        if(getColor() != null) {
-            canvas.drawRect(point.x - (width / 2), point.y - (height / 2), width, height);
-        }else {
-            canvas.fillRect(point.x - (width/2), point.y - (height/2), width, height);
-        }
+    @Override
+    protected void drawFill(Graphics canvas) {
+        Point point = getPosition();
+        int height = get("height").intValue();
+        int width = get("width").intValue();
+        canvas.fillRect(point.x - (width/2), point.y - (height/2), width, height);
     }
 
     @Override
@@ -48,7 +45,7 @@ public class Rectangle extends DefaultShape implements Shape {
     @Override
     public String[] properties() {
         return new String[] {
-            "x", "y", "height", "width"
+            "height", "width"
         };
     }
 }

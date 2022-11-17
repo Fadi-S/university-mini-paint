@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="frontend.PropertiesForm">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="-1">
+    <margin top="20" left="20" bottom="20" right="20"/>
+    <constraints>
+      <xy x="20" y="20" width="509" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="96fca" class="javax.swing.JTextField" binding="yTextField">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <toolTipText value="Y position"/>
+        </properties>
+      </component>
+      <component id="4e39e" class="javax.swing.JTextField" binding="xTextField">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <toolTipText value="X position"/>
+        </properties>
+      </component>
+      <grid id="85c81" binding="formPanel" layout-manager="BorderLayout" hgap="25" vgap="25">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <component id="d4c78" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <labelFor value="4e39e"/>
+          <text value="X Position"/>
+        </properties>
+      </component>
+      <component id="9c54" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <labelFor value="96fca"/>
+          <text value="Y Position"/>
+        </properties>
+      </component>
+      <component id="c091b" class="javax.swing.JCheckBox" binding="isFilledCheckBox">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Is Filled"/>
+        </properties>
+      </component>
+      <component id="f009f" class="javax.swing.JButton" binding="submitBtn">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Draw"/>
+        </properties>
+      </component>
+      <component id="15898" class="javax.swing.JButton" binding="cancelBtn">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cancel"/>
+        </properties>
+      </component>
+      <component id="e66cb" class="javax.swing.JButton" binding="chooseColorBtn">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="2" hsize-policy="3" anchor="1" fill="1" indent="1" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Choose Color"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

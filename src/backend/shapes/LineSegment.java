@@ -8,7 +8,7 @@ public class LineSegment extends Rectangle implements Shape {
 
     public String[] properties() {
         return new String[]{
-                "x", "y", "width"
+                "width"
         };
     }
 

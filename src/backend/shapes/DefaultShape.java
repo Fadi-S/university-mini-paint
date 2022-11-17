@@ -21,12 +21,6 @@ public abstract class DefaultShape implements Shape {
         this.point = new Point();
     }
 
-    DefaultShape(int x, int y) {
-        properties = new HashMap<>();
-
-        setPosition(new Point(x, y));
-    }
-
     @Override
     public void setPosition(Point position) {
         this.point = position;
@@ -52,12 +46,6 @@ public abstract class DefaultShape implements Shape {
     }
 
     public void set(String property, Double value) {
-        if(property.equals("x"))
-            point.x = value.intValue();
-
-        if(property.equals("y"))
-            point.y = value.intValue();
-
         this.properties.put(property, value);
     }
 
@@ -82,7 +70,21 @@ public abstract class DefaultShape implements Shape {
     }
 
     @Override
-    public abstract void draw(Graphics canvas);
+    public void draw(Graphics canvas) {
+        canvas.setColor(Color.black);
+        if(get("colorize") == 1) {
+            canvas.setColor(get("filled") == 1 ? getFillColor() : getColor());
+        }
+
+        if(get("filled") != 1 || get("colorize") != 1) {
+            drawOutline(canvas);
+        }else {
+            drawFill(canvas);
+        }
+    }
+
+    protected abstract void drawOutline(Graphics canvas);
+    protected abstract void drawFill(Graphics canvas);
 
     public abstract boolean isPointInside(Point point);
 

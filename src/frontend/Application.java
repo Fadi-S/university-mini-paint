@@ -11,6 +11,12 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.function.BiConsumer;
 
 public class Application {
     private final JFrame frame;
@@ -94,8 +100,9 @@ public class Application {
                 return;
             }
 
-            selectedShape.setColor(Color.decode("#4C5CFF"));
-            selectedShape.setFillColor(Color.decode("#3ECAFF"));
+            Map<String, Double> props = selectedShape.getProperties();
+            props.put("colorize", 1.0);
+            selectedShape.setProperties(props);
 
             engine.refresh();
         });
@@ -143,30 +150,10 @@ public class Application {
     }
 
     private void create(DefaultShape shape) {
-        if(collectProperties(shape))
-            engine.addShape(shape);
-    }
-
-    private boolean collectProperties(DefaultShape shape)
-    {
-        String[] props = shape.properties();
-
-        int i = 0;
-        while (i < props.length) {
-            String property = props[i];
-            String value = JOptionPane.showInputDialog("Enter " + property + ": ");
-            if(value == null) {
-                return false;
-            }
-
-            try {
-                shape.set(property, Double.parseDouble(value));
-                i++;
-            }catch (Exception error) {
-                JOptionPane.showMessageDialog(frame, "Please enter a number!");
-            }
-        }
-
-        return true;
+        PropertiesForm form = new PropertiesForm(shape);
+        form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
+            if(shouldRender)
+                engine.addShape(shape);
+        });
     }
 }

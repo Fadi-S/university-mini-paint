@@ -7,9 +7,7 @@ import java.awt.*;
 public class Circle extends DefaultShape implements Shape {
 
     public String[] properties() {
-        return new String[]{
-                "x", "y", "radius"
-        };
+        return new String[] { "radius" };
     }
 
     @Override
@@ -25,33 +23,31 @@ public class Circle extends DefaultShape implements Shape {
     }
 
     @Override
-    public String getKey() {
-        return "circle-" + seed;
-    }
-
-    @Override
-    public void draw(Graphics canvas) {
-        canvas.setColor(null);
-        if(get("colorize") == 1) {
-            canvas.setColor(getColor() == null ? getFillColor() : getColor());
-        }
-
+    protected void drawOutline(Graphics canvas) {
         Point point = getPosition();
         int radius = get("radius").intValue();
         int diameter = radius * 2;
+        canvas.drawOval(
+                point.x - radius,
+                point.y - radius,
+                diameter, diameter
+        );
+    }
 
-        if(getColor() != null) {
-            canvas.drawOval(
-                    point.x - radius,
-                    point.y - radius,
-                    diameter, diameter
-            );
-        }else  {
-            canvas.fillOval(
-                    point.x - radius,
-                    point.y - radius,
-                    diameter, diameter
-            );
-        }
+    @Override
+    protected void drawFill(Graphics canvas) {
+        Point point = getPosition();
+        int radius = get("radius").intValue();
+        int diameter = radius * 2;
+        canvas.fillOval(
+                point.x - radius,
+                point.y - radius,
+                diameter, diameter
+        );
+    }
+
+    @Override
+    public String getKey() {
+        return "circle-" + seed;
     }
 }

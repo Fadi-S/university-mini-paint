@@ -8,7 +8,7 @@ public class Square extends Rectangle implements Shape {
     @Override
     public String[] properties() {
         return new String[]{
-            "x", "y", "side"
+           "side"
         };
     }
 
