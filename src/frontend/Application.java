@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -30,6 +31,8 @@ public class Application {
     private JButton deleteBtn;
     private JLabel selectedShapeLabel;
     private JComboBox<String> shapesSelectBox;
+    private JLabel sizeLabel;
+    private JLabel mousePosition;
 
     private final Engine engine;
 
@@ -47,6 +50,8 @@ public class Application {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);
+
+        sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
 
         engine = new Engine(canvas.getGraphics());
         engine.addListener(new ShapesChangedListener() {
@@ -121,6 +126,15 @@ public class Application {
             public void mouseEntered(MouseEvent e) {}
             public void mouseExited(MouseEvent e) {}
         });
+
+        canvas.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {}
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());
+            }
+        });
     }
 
     private void select(Shape shape) {
@@ -145,8 +159,8 @@ public class Application {
     private void drawCenterPoint()
     {
         Point center = selectedShape.getPosition();
-        canvas.getGraphics().fillRect(center.x-1, center.y-3, 2, 6);
-        canvas.getGraphics().fillRect(center.x-3, center.y-1, 6, 2);
+        canvas.getGraphics().drawLine(center.x, center.y-2, center.x, center.y+2);
+        canvas.getGraphics().drawLine(center.x-2, center.y, center.x+2, center.y);
     }
 
     private void create(DefaultShape shape) {

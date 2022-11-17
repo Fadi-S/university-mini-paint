@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/utils/Distance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
@@ -92,7 +89,7 @@
       <workItem from="1668505530298" duration="4072000" />
       <workItem from="1668519588758" duration="796000" />
       <workItem from="1668546089638" duration="4136000" />
-      <workItem from="1668623387326" duration="19811000" />
+      <workItem from="1668623387326" duration="23264000" />
     </task>
     <servers />
   </component>

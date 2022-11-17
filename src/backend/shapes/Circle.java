@@ -1,6 +1,7 @@
 package backend.shapes;
 
 import backend.Shape;
+import backend.utils.Distance;
 
 import java.awt.*;
 
@@ -15,9 +16,7 @@ public class Circle extends DefaultShape implements Shape {
         double radius = get("radius");
         Point shapePosition = this.getPosition();
 
-        double distance = Math.sqrt(
-                Math.pow(point.x - shapePosition.x, 2) + Math.pow(point.y - shapePosition.y, 2)
-        );
+        double distance = Distance.between(point, shapePosition);
 
         return radius > distance;
     }

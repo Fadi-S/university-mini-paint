@@ -26,10 +26,18 @@ public class Square extends Rectangle implements Shape {
     }
 
     @Override
-    public void draw(Graphics canvas) {
+    protected void drawOutline(Graphics canvas) {
         set("height", get("side"));
         set("width", get("side"));
 
-        super.draw(canvas);
+        super.drawOutline(canvas);
+    }
+
+    @Override
+    protected void drawFill(Graphics canvas) {
+        set("height", get("side"));
+        set("width", get("side"));
+
+        super.drawOutline(canvas);
     }
 }
