@@ -10,7 +10,7 @@ public class Engine implements DrawingEngine {
 
     private final ArrayList<Shape> shapes = new ArrayList<>();
     private final ArrayList<ShapesChangedListener> listeners = new ArrayList<>();
-    private final Graphics canvas;
+    private Graphics canvas;
 
     public Engine(Graphics canvas) {
         this.canvas = canvas;
@@ -18,6 +18,10 @@ public class Engine implements DrawingEngine {
 
     public void addListener(ShapesChangedListener toAdd) {
         listeners.add(toAdd);
+    }
+
+    public void setCanvas(Graphics canvas) {
+        this.canvas = canvas;
     }
 
     @Override

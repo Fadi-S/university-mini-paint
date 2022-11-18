@@ -8,16 +8,10 @@ import backend.shapes.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+import java.time.Duration;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.function.BiConsumer;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Application {
     private final JFrame frame;
@@ -49,11 +43,32 @@ public class Application {
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setResizable(false);
 
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
 
         engine = new Engine(canvas.getGraphics());
+
+        final AtomicBoolean shouldRefresh = new AtomicBoolean(false);
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                shouldRefresh.set(true);
+
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(250);
+                        if(! shouldRefresh.get()) return;
+
+                        engine.setCanvas(canvas.getGraphics());
+                        engine.refresh();
+                        shouldRefresh.set(false);
+                    } catch (InterruptedException ignored) {}
+                }).start();
+
+                sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
+            }
+        });
+
         engine.addListener(new ShapesChangedListener() {
             @Override
             public void shapeAdded(Shape shape) {
