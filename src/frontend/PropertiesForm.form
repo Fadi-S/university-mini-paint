@@ -70,20 +70,20 @@
           <text value="Draw"/>
         </properties>
       </component>
-      <component id="15898" class="javax.swing.JButton" binding="cancelBtn">
-        <constraints>
-          <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Cancel"/>
-        </properties>
-      </component>
       <component id="e66cb" class="javax.swing.JButton" binding="chooseColorBtn">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="2" hsize-policy="3" anchor="1" fill="1" indent="1" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="3" anchor="1" fill="1" indent="1" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Choose Color"/>
+        </properties>
+      </component>
+      <component id="15898" class="javax.swing.JButton" binding="cancelBtn">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cancel"/>
         </properties>
       </component>
     </children>

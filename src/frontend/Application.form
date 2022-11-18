@@ -16,10 +16,14 @@
           <grid row="2" column="3" row-span="3" col-span="5" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-14144460"/>
+          <background color="-1"/>
           <opaque value="false"/>
         </properties>
-        <border type="none"/>
+        <border type="none">
+          <font/>
+          <title-color color="-6840403"/>
+          <color color="-16777216"/>
+        </border>
         <children/>
       </grid>
       <grid id="3d4ae" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="-1">

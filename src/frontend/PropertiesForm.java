@@ -29,9 +29,18 @@ public class PropertiesForm {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         response = new CompletableFuture<>();
 
+        JRootPane rootPane = SwingUtilities.getRootPane(panel);
+        rootPane.setDefaultButton(submitBtn);
+
         AtomicReference<Color> color = new AtomicReference<>();
 
-        chooseColorBtn.setUI(new BasicButtonUI());
+        chooseColorBtn.setUI(new BasicButtonUI() {
+            @Override
+            protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect, Rectangle textRect, Rectangle iconRect) {
+                g.setColor(Color.white);
+                g.drawRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
+            }
+        });
         chooseColorBtn.setBackground(Color.black);
         chooseColorBtn.setForeground(Color.white);
         chooseColorBtn.addActionListener((e) -> {

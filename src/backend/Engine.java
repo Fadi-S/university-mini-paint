@@ -5,7 +5,6 @@ import backend.events.ShapesChangedListener;
 import java.awt.*;
 import java.util.ArrayList;
 
-
 public class Engine implements DrawingEngine {
 
     private final ArrayList<Shape> shapes = new ArrayList<>();
@@ -54,7 +53,7 @@ public class Engine implements DrawingEngine {
         canvas.clearRect(0, 0, 9999, 9999);
 
         for (Shape shape : shapes) {
-            shape.draw(canvas);
+            shape.draw(this.canvas);
         }
 
         listeners.forEach(ShapesChangedListener::refreshed);
