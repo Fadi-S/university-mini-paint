@@ -7,7 +7,8 @@
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +88,7 @@
       <workItem from="1668519588758" duration="796000" />
       <workItem from="1668546089638" duration="4136000" />
       <workItem from="1668623387326" duration="23786000" />
-      <workItem from="1668779628896" duration="1972000" />
+      <workItem from="1668779628896" duration="2581000" />
     </task>
     <servers />
   </component>

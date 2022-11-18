@@ -60,7 +60,7 @@ public class Application {
                         if(! shouldRefresh.get()) return;
 
                         engine.setCanvas(canvas.getGraphics());
-                        engine.refresh();
+
                         shouldRefresh.set(false);
                     } catch (InterruptedException ignored) {}
                 }).start();
@@ -79,6 +79,11 @@ public class Application {
                 shapesSelectBox.removeItem(shape.getKey());
 
                 select(null);
+            }
+
+            @Override
+            public void refreshed() {
+                drawCenterPoint();
             }
         });
 
@@ -173,6 +178,8 @@ public class Application {
 
     private void drawCenterPoint()
     {
+        if(selectedShape == null) return;
+
         Point center = selectedShape.getPosition();
         canvas.getGraphics().drawLine(center.x, center.y-2, center.x, center.y+2);
         canvas.getGraphics().drawLine(center.x-2, center.y, center.x+2, center.y);

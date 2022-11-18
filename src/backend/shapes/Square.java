@@ -38,6 +38,6 @@ public class Square extends Rectangle implements Shape {
         set("height", get("side"));
         set("width", get("side"));
 
-        super.drawOutline(canvas);
+        super.drawFill(canvas);
     }
 }

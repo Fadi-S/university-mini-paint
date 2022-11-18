@@ -22,6 +22,8 @@ public class Engine implements DrawingEngine {
 
     public void setCanvas(Graphics canvas) {
         this.canvas = canvas;
+
+        this.refresh();
     }
 
     @Override
@@ -54,6 +56,8 @@ public class Engine implements DrawingEngine {
         for (Shape shape : shapes) {
             shape.draw(canvas);
         }
+
+        listeners.forEach(ShapesChangedListener::refreshed);
     }
 
     public Integer getShapeIndexAtPoint(Point point)
