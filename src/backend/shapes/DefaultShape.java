@@ -72,13 +72,13 @@ public abstract class DefaultShape implements Shape {
     @Override
     public void draw(Graphics canvas) {
         canvas.setColor(Color.black);
-        if(get("colorize") == 1) {
-            canvas.setColor(get("filled") == 1 ? getFillColor() : getColor());
-        }
 
-        if(get("filled") != 1 || get("colorize") != 1) {
-            drawOutline(canvas);
-        }else {
+        if(getColor() != null)
+            canvas.setColor(getColor());
+        drawOutline(canvas);
+
+        if(getFillColor() != null) {
+            canvas.setColor(getFillColor());
             drawFill(canvas);
         }
     }

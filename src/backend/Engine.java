@@ -22,7 +22,7 @@ public class Engine implements DrawingEngine {
     public void setCanvas(Graphics canvas) {
         this.canvas = canvas;
 
-        this.refresh();
+        this.refresh(canvas);
     }
 
     @Override

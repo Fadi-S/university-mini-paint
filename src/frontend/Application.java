@@ -9,8 +9,7 @@ import backend.shapes.Rectangle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.Duration;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Application {
@@ -27,6 +26,8 @@ public class Application {
     private JComboBox<String> shapesSelectBox;
     private JLabel sizeLabel;
     private JLabel mousePosition;
+    private JPanel controlsPanel;
+    private JPanel shapesButtonsPanel;
 
     private final Engine engine;
 
@@ -43,7 +44,6 @@ public class Application {
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
 
         engine = new Engine(canvas.getGraphics());
@@ -58,9 +58,7 @@ public class Application {
                     try {
                         Thread.sleep(250);
                         if(! shouldRefresh.get()) return;
-
                         engine.setCanvas(canvas.getGraphics());
-
                         shouldRefresh.set(false);
                     } catch (InterruptedException ignored) {}
                 }).start();
@@ -74,10 +72,10 @@ public class Application {
             public void shapeAdded(Shape shape) {
                 shapesSelectBox.addItem(shape.getKey());
             }
+
             @Override
             public void shapeRemoved(Shape shape) {
                 shapesSelectBox.removeItem(shape.getKey());
-
                 select(null);
             }
 
@@ -91,9 +89,7 @@ public class Application {
             if (event.getStateChange() != ItemEvent.SELECTED) {
                 return;
             }
-
             String shapeKey = (String) event.getItem();
-
             Shape selectShape = null;
             for (Shape shape : engine.getShapes()) {
                 if(shape.getKey().equals(shapeKey)) {
@@ -102,7 +98,6 @@ public class Application {
                 }
             }
             if(selectShape == null) return;
-
             select(selectShape);
         });
 
@@ -125,11 +120,7 @@ public class Application {
                 return;
             }
 
-            Map<String, Double> props = selectedShape.getProperties();
-            props.put("colorize", 1.0);
-            selectedShape.setProperties(props);
-
-            engine.refresh();
+            chooseColor((DefaultShape) selectedShape);
         });
 
         canvas.addMouseListener(new MouseListener() {
@@ -173,7 +164,6 @@ public class Application {
             shapesSelectBox.setSelectedItem(shape.getKey());
 
         engine.refresh();
-        drawCenterPoint();
     }
 
     private void drawCenterPoint()
@@ -181,8 +171,14 @@ public class Application {
         if(selectedShape == null) return;
 
         Point center = selectedShape.getPosition();
-        canvas.getGraphics().drawLine(center.x, center.y-2, center.x, center.y+2);
-        canvas.getGraphics().drawLine(center.x-2, center.y, center.x+2, center.y);
+        Graphics graphics = canvas.getGraphics();
+        graphics.drawLine(center.x, center.y-2, center.x, center.y+2);
+        graphics.drawLine(center.x-2, center.y, center.x+2, center.y);
+    }
+
+    private void enable(boolean value) {
+        Arrays.stream(controlsPanel.getComponents()).forEach(i -> i.setEnabled(value));
+        Arrays.stream(shapesButtonsPanel.getComponents()).forEach(i -> i.setEnabled(value));
     }
 
     private void create(DefaultShape shape) {
@@ -190,6 +186,16 @@ public class Application {
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
             if(shouldRender)
                 engine.addShape(shape);
+        });
+    }
+
+    private void chooseColor(DefaultShape shape) {
+        ColorPicker colorPicker = new ColorPicker(shape);
+        enable(false);
+        colorPicker.getColors().whenComplete((Boolean shouldRender, Object o2) -> {
+            enable(true);
+
+            engine.refresh();
         });
     }
 }

@@ -3,11 +3,9 @@ package frontend;
 import backend.shapes.DefaultShape;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class PropertiesForm {
     private final JFrame frame;
@@ -16,8 +14,6 @@ public class PropertiesForm {
     private JTextField xTextField;
     private JButton submitBtn;
     private JPanel formPanel;
-    private JCheckBox isFilledCheckBox;
-    private JButton chooseColorBtn;
     private JButton cancelBtn;
 
     CompletableFuture<Boolean> response;
@@ -31,23 +27,6 @@ public class PropertiesForm {
 
         JRootPane rootPane = SwingUtilities.getRootPane(panel);
         rootPane.setDefaultButton(submitBtn);
-
-        AtomicReference<Color> color = new AtomicReference<>();
-
-        chooseColorBtn.setUI(new BasicButtonUI() {
-            @Override
-            protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect, Rectangle textRect, Rectangle iconRect) {
-                g.setColor(Color.white);
-                g.drawRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
-            }
-        });
-        chooseColorBtn.setBackground(Color.black);
-        chooseColorBtn.setForeground(Color.white);
-        chooseColorBtn.addActionListener((e) -> {
-            color.set(JColorChooser.showDialog(frame, "Choose shape color", Color.black));
-
-            chooseColorBtn.setBackground(color.get());
-        });
 
         String[] props = shape.properties();
 
@@ -65,14 +44,13 @@ public class PropertiesForm {
         submitBtn.addActionListener((event) -> {
             String xStr = xTextField.getText();
             String yStr = yTextField.getText();
-            boolean isFilled = isFilledCheckBox.isSelected();
 
             String[] values = new String[customFields.length];
             for(int i=0; i<customFields.length; i++) {
                 values[i] = customFields[i].getText();
             }
 
-            if(xStr.isBlank() || yStr.isBlank() || color.get() == null || Arrays.stream(values).anyMatch(String::isBlank)) {
+            if(xStr.isBlank() || yStr.isBlank() || Arrays.stream(values).anyMatch(String::isBlank)) {
                 JOptionPane.showMessageDialog(frame, "Some fields are empty");
 
                 return;
@@ -82,12 +60,6 @@ public class PropertiesForm {
                 int x = Integer.parseInt(xStr);
                 int y = Integer.parseInt(yStr);
                 shape.setPosition(new Point(x, y));
-                shape.set("filled", isFilled ? 1.0 : 0);
-                if(isFilled) {
-                    shape.setFillColor(color.get());
-                }else {
-                    shape.setColor(color.get());
-                }
 
                 for(int i=0; i<props.length; i++) {
                     double val = Double.parseDouble(values[i]);
