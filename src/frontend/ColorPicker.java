@@ -47,7 +47,7 @@ public class ColorPicker {
         AtomicReference<Color> fillColor = new AtomicReference<>(shape.getFillColor());
         fillColorBtn.setUI(new CustomButton());
         fillColorBtn.setBackground(fillColor.get());
-        fillColorBtn.setForeground(Color.white);
+        fillColorBtn.setForeground(Color.black);
         fillColorBtn.addActionListener((e) -> {
             fillColor.set(JColorChooser.showDialog(frame, "Choose shape fill color", fillColor.get()));
 

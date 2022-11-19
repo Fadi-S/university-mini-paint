@@ -8,7 +8,9 @@ import java.util.Map;
 
 public abstract class DefaultShape implements Shape {
 
-    protected final String seed = String.valueOf((int) (Math.random() * 100));
+    protected final String seed;// = String.valueOf((int) (Math.random() * 100));
+
+    protected static int key = 1;
 
     private Color color;
     private Color fillColor;
@@ -19,6 +21,8 @@ public abstract class DefaultShape implements Shape {
         properties = new HashMap<>();
 
         this.point = new Point();
+
+        seed = String.format("%02d", (key++));
     }
 
     @Override
@@ -71,10 +75,7 @@ public abstract class DefaultShape implements Shape {
 
     @Override
     public void draw(Graphics canvas) {
-        canvas.setColor(Color.black);
-
-        if(getColor() != null)
-            canvas.setColor(getColor());
+        canvas.setColor(getColor());
         drawOutline(canvas);
 
         if(getFillColor() != null) {

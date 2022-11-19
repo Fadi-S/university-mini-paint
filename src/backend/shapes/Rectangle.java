@@ -19,7 +19,7 @@ public class Rectangle extends DefaultShape implements Shape {
         Point point = getPosition();
         int height = get("height").intValue();
         int width = get("width").intValue();
-        canvas.fillRect(point.x - (width/2), point.y - (height/2), width, height);
+        canvas.fillRect(point.x - (width/2)+1, point.y - (height/2)+1, width-1, height-1);
     }
 
     @Override

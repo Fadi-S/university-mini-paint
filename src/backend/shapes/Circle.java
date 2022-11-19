@@ -39,9 +39,9 @@ public class Circle extends DefaultShape implements Shape {
         int radius = get("radius").intValue();
         int diameter = radius * 2;
         canvas.fillOval(
-                point.x - radius,
-                point.y - radius,
-                diameter, diameter
+                point.x - radius+1,
+                point.y - radius+1,
+                diameter-2, diameter-2
         );
     }
 

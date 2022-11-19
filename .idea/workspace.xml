@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Circle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/ColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;CodeWithMe&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="frontend.Application" />
       <module name="Lab7" />
@@ -88,8 +85,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Application" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -106,7 +103,7 @@
       <workItem from="1668519588758" duration="796000" />
       <workItem from="1668546089638" duration="4136000" />
       <workItem from="1668623387326" duration="23786000" />
-      <workItem from="1668779628896" duration="28172000" />
+      <workItem from="1668779628896" duration="30155000" />
     </task>
     <servers />
   </component>

@@ -45,7 +45,6 @@ public class Application {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
-
         engine = new Engine(canvas.getGraphics());
 
         final AtomicBoolean shouldRefresh = new AtomicBoolean(false);
