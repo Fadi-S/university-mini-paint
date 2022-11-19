@@ -53,9 +53,7 @@ public class Engine implements DrawingEngine {
     public void refresh(Graphics canvas) {
         canvas.clearRect(0, 0, 9999, 9999);
 
-        for (Shape shape : shapes) {
-            shape.draw(this.canvas);
-        }
+        shapes.forEach(shape -> shape.draw(canvas));
 
         listeners.forEach(ShapesChangedListener::refreshed);
     }

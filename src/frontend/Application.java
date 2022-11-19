@@ -85,7 +85,7 @@ public class Application {
         });
 
         shapesSelectBox.addItemListener(event -> {
-            if (event.getStateChange() != ItemEvent.SELECTED) {
+            if (event.getStateChange() != ItemEvent.SELECTED || !shapesSelectBox.hasFocus()) {
                 return;
             }
             String shapeKey = (String) event.getItem();
