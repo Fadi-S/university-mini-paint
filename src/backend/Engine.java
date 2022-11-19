@@ -4,6 +4,7 @@ import backend.events.ShapesChangedListener;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Engine implements DrawingEngine {
 
@@ -61,12 +62,14 @@ public class Engine implements DrawingEngine {
 
     public Integer getShapeIndexAtPoint(Point point)
     {
-        for (int i=0; i<shapes.size(); i++) {
-            if(shapes.get(i).isPointInside(point))
-                return i;
-        }
+        Shape selectedShape = shapes.stream()
+                .filter((shape) -> shape.isPointInside(point))
+                .min(Comparator.comparing(Shape::area))
+                .orElse(null);
 
-        return null;
+        if(selectedShape == null) return null;
+
+        return shapes.indexOf(selectedShape);
     }
 
     public void refresh() throws NullPointerException {

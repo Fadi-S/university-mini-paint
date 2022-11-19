@@ -49,4 +49,8 @@ public class Circle extends DefaultShape implements Shape {
     public String getKey() {
         return "circle-" + seed;
     }
+
+    public double area() {
+        return Math.PI * Math.pow(get("radius"), 2);
+    }
 }

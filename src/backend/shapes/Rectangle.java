@@ -42,6 +42,10 @@ public class Rectangle extends DefaultShape implements Shape {
         return "rectangle-" + seed;
     }
 
+    public double area() {
+        return get("width") * get("height");
+    }
+
     @Override
     public String[] properties() {
         return new String[] {

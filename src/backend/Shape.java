@@ -22,5 +22,7 @@ public interface Shape {
 
     String getKey();
 
+    double area();
+
     void draw(Graphics canvas);
 }

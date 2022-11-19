@@ -41,4 +41,11 @@ public class LineSegment extends DefaultShape implements Shape {
 
         return Math.abs(lengthFromPoint - lineLength) <= 2;
     }
+
+    public double area() {
+        Point endPoint = new Point(get("x2").intValue(), get("y2").intValue());
+        Point startPoint = getPosition();
+
+        return Distance.between(startPoint, endPoint);
+    }
 }

@@ -183,8 +183,9 @@ public class Application {
     private void create(DefaultShape shape) {
         PropertiesForm form = new PropertiesForm(shape);
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
-            if(shouldRender)
-                engine.addShape(shape);
+            if(!shouldRender) return;
+
+            engine.addShape(shape);
         });
     }
 
