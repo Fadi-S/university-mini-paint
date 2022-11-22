@@ -193,8 +193,6 @@ public class Application {
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
             shapePropertiesForm = null;
 
-
-
             if(!shouldRender) return;
 
             engine.addShape(shape);
