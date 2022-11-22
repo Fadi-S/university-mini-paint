@@ -7,10 +7,10 @@ import java.awt.*;
 
 public class LineSegment extends DefaultShape implements Shape {
 
-    public String[] properties() {
-        return new String[]{
-                "x2", "y2"
-        };
+    public LineSegment() {
+        super();
+
+        set("outlineOnly", 1.0);
     }
 
     @Override
@@ -47,5 +47,11 @@ public class LineSegment extends DefaultShape implements Shape {
         Point startPoint = getPosition();
 
         return Distance.between(startPoint, endPoint);
+    }
+
+    public String[] properties() {
+        return new String[]{
+                "x2", "y2"
+        };
     }
 }

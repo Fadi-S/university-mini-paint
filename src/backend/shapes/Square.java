@@ -2,22 +2,16 @@ package backend.shapes;
 
 import backend.Shape;
 
-import java.awt.*;
-
 public class Square extends Rectangle implements Shape {
-    @Override
-    public String[] properties() {
-        return new String[]{
-           "side"
-        };
-    }
 
     @Override
-    public boolean isPointInside(Point point) {
-        set("height", get("side"));
-        set("width", get("side"));
+    public void set(String property, Double value) {
+        super.set(property, value);
 
-        return super.isPointInside(point);
+        if (property.equals("side")) {
+            super.set("height", value);
+            super.set("width", value);
+        }
     }
 
     @Override
@@ -26,18 +20,9 @@ public class Square extends Rectangle implements Shape {
     }
 
     @Override
-    protected void drawOutline(Graphics canvas) {
-        set("height", get("side"));
-        set("width", get("side"));
-
-        super.drawOutline(canvas);
-    }
-
-    @Override
-    protected void drawFill(Graphics canvas) {
-        set("height", get("side"));
-        set("width", get("side"));
-
-        super.drawFill(canvas);
+    public String[] properties() {
+        return new String[]{
+                "side"
+        };
     }
 }

@@ -13,12 +13,7 @@ public class Circle extends DefaultShape implements Shape {
 
     @Override
     public boolean isPointInside(Point point) {
-        double radius = get("radius");
-        Point shapePosition = this.getPosition();
-
-        double distance = Distance.between(point, shapePosition);
-
-        return radius > distance;
+        return get("radius") > Distance.between(point, getPosition());
     }
 
     @Override
@@ -51,6 +46,7 @@ public class Circle extends DefaultShape implements Shape {
     }
 
     public double area() {
-        return Math.PI * Math.pow(get("radius"), 2);
+        double r = get("radius");
+        return Math.PI * r*r;
     }
 }

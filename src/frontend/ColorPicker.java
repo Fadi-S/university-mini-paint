@@ -32,6 +32,9 @@ public class ColorPicker {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         response = new CompletableFuture<>();
 
+        JRootPane rootPane = SwingUtilities.getRootPane(panel);
+        rootPane.setDefaultButton(okBtn);
+
         AtomicReference<Color> outlineColor = new AtomicReference<>(shape.getColor());
         outlineColorBtn.setUI(new CustomButton());
         outlineColorBtn.setBackground(outlineColor.get());
@@ -43,6 +46,8 @@ public class ColorPicker {
 
             shape.setColor(outlineColor.get());
         });
+
+        fillColorBtn.setVisible(shape.get("outlineOnly") == 0);
 
         AtomicReference<Color> fillColor = new AtomicReference<>(shape.getFillColor());
         fillColorBtn.setUI(new CustomButton());

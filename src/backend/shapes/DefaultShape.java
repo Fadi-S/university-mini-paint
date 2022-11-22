@@ -8,9 +8,8 @@ import java.util.Map;
 
 public abstract class DefaultShape implements Shape {
 
-    protected final String seed;// = String.valueOf((int) (Math.random() * 100));
-
-    protected static int key = 1;
+    private static int key = 1;
+    protected final String seed = String.format("%02d", (key++));// = String.valueOf((int) (Math.random() * 100));
 
     private Color color;
     private Color fillColor;
@@ -21,8 +20,6 @@ public abstract class DefaultShape implements Shape {
         properties = new HashMap<>();
 
         this.point = new Point();
-
-        seed = String.format("%02d", (key++));
     }
 
     @Override

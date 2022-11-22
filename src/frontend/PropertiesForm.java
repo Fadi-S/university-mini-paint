@@ -18,7 +18,7 @@ public class PropertiesForm {
 
     CompletableFuture<Boolean> response;
 
-    public PropertiesForm(DefaultShape shape) {
+    public PropertiesForm(DefaultShape shape, JPanel canvas) {
         frame = new JFrame("Properties of " + shape.getKey());
         frame.setContentPane(panel);
         frame.setSize(400, 350);
@@ -59,6 +59,16 @@ public class PropertiesForm {
             try {
                 int x = Integer.parseInt(xStr);
                 int y = Integer.parseInt(yStr);
+                Dimension canvasSize = canvas.getSize();
+                if(x > canvasSize.width || y > canvasSize.height) {
+                    JOptionPane.showMessageDialog(frame, "X and Y coordinates must not be greater than " + canvasSize.width + " and " + canvasSize.height + " respectively");
+                    return;
+                }
+
+                if(x < 0 || y < 0) {
+                    throw new NumberFormatException();
+                }
+
                 shape.setPosition(new Point(x, y));
 
                 for(int i=0; i<props.length; i++) {
@@ -89,5 +99,9 @@ public class PropertiesForm {
         frame.setVisible(true);
 
         return response;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }

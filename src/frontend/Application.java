@@ -180,9 +180,21 @@ public class Application {
         Arrays.stream(shapesButtonsPanel.getComponents()).forEach(i -> i.setEnabled(value));
     }
 
+    private JFrame shapePropertiesForm = null;
+
     private void create(DefaultShape shape) {
-        PropertiesForm form = new PropertiesForm(shape);
+        if(shapePropertiesForm != null) {
+            shapePropertiesForm.requestFocus();
+            return;
+        }
+
+        PropertiesForm form = new PropertiesForm(shape, canvas);
+        shapePropertiesForm = form.getFrame();
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
+            shapePropertiesForm = null;
+
+
+
             if(!shouldRender) return;
 
             engine.addShape(shape);

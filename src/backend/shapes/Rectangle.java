@@ -7,11 +7,38 @@ import java.awt.*;
 public class Rectangle extends DefaultShape implements Shape {
 
     @Override
-    protected void drawOutline(Graphics canvas) {
-        Point point = getPosition();
+    public boolean isPointInside(Point point) {
+        Point center = getPosition();
         int height = get("height").intValue();
         int width = get("width").intValue();
-        canvas.drawRect(point.x - (width / 2), point.y - (height / 2), width, height);
+
+        return new java.awt.Rectangle(
+                center.x - (width/2),
+                center.y - (height/2),
+                width,
+                height
+        ).contains(point.x, point.y);
+
+        /*
+        * Get top right point and bottom left
+        * and check if point is inside them.
+        * old function:
+        *
+        * int x = point.x;
+        * int y = point.y;
+        * Point topRight = new Point(center.x + (width/2), center.y + (height/2));
+        * Point bottomLeft = new Point(center.x - (width/2), center.y - (height/2));
+        *
+        * return x > bottomLeft.x && x < topRight.x && y > bottomLeft.y && y < topRight.y;
+        **/
+    }
+
+    @Override
+    protected void drawOutline(Graphics canvas) {
+        Point center = getPosition();
+        int height = get("height").intValue();
+        int width = get("width").intValue();
+        canvas.drawRect(center.x - (width / 2), center.y - (height / 2), width, height);
     }
 
     @Override
@@ -20,21 +47,6 @@ public class Rectangle extends DefaultShape implements Shape {
         int height = get("height").intValue();
         int width = get("width").intValue();
         canvas.fillRect(point.x - (width/2)+1, point.y - (height/2)+1, width-1, height-1);
-    }
-
-    @Override
-    public boolean isPointInside(Point point) {
-        int height = get("height").intValue();
-        int width = get("width").intValue();
-        Point center = getPosition();
-
-        int x = point.x;
-        int y = point.y;
-
-        Point topRight = new Point(center.x + (width/2), center.y + (height/2));
-        Point bottomLeft = new Point(center.x - (width/2), center.y - (height/2));
-
-        return x > bottomLeft.x && x < topRight.x && y > bottomLeft.y && y < topRight.y;
     }
 
     @Override
