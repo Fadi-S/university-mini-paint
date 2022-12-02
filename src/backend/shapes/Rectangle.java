@@ -1,13 +1,13 @@
 package backend.shapes;
 
-import backend.Shape;
+import backend.shapes.interfaces.Shape;
 
 import java.awt.*;
 
 public class Rectangle extends DefaultShape implements Shape {
 
     @Override
-    public boolean isPointInside(Point point) {
+    public boolean contains(Point point) {
         Point center = getPosition();
         int height = get("height").intValue();
         int width = get("width").intValue();
@@ -17,7 +17,7 @@ public class Rectangle extends DefaultShape implements Shape {
                 center.y - (height/2),
                 width,
                 height
-        ).contains(point.x, point.y);
+        ).contains(point);
 
         /*
         * Get top right point and bottom left

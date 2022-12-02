@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/paintLab8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/shapes/Triangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/backend/shapes/interfaces/Movable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/DrawingEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/DrawingEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/interfaces/Shape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Circle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/utils/Distance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/utils/Distance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/ColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,25 +51,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.STATE&quot;: &quot;right&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE&quot;: &quot;left&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.STATE": "right",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE": "left",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/fadi/Documents/Fadi/Koleya/Term 5/Programming 2/Assignments/Lab7",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="frontend.Application" />
@@ -119,7 +130,14 @@
       <workItem from="1668907432305" duration="713000" />
       <workItem from="1668909608660" duration="160000" />
       <workItem from="1668972210460" duration="156000" />
-      <workItem from="1669073024149" duration="5595000" />
+      <workItem from="1669073024149" duration="5714000" />
+      <workItem from="1669135369087" duration="7728000" />
+      <workItem from="1669229121522" duration="199000" />
+      <workItem from="1669667272983" duration="202000" />
+      <workItem from="1669672856957" duration="347000" />
+      <workItem from="1669830719750" duration="124000" />
+      <workItem from="1669838756803" duration="437000" />
+      <workItem from="1669989769122" duration="15432000" />
     </task>
     <servers />
   </component>

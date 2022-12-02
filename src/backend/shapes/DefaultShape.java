@@ -1,20 +1,21 @@
 package backend.shapes;
 
-import backend.Shape;
+import backend.shapes.interfaces.Movable;
+import backend.shapes.interfaces.Shape;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class DefaultShape implements Shape {
+public abstract class DefaultShape implements Shape, Movable {
 
     private static int key = 1;
-    protected final String seed = String.format("%02d", (key++));// = String.valueOf((int) (Math.random() * 100));
+    protected final String seed = String.format("%02d", (key++));
 
     private Color color;
     private Color fillColor;
     private Point point;
-    private Map<String, Double> properties;
+    private final Map<String, Double> properties;
 
     DefaultShape() {
         properties = new HashMap<>();
@@ -30,16 +31,6 @@ public abstract class DefaultShape implements Shape {
     @Override
     public Point getPosition() {
         return this.point;
-    }
-
-    @Override
-    public void setProperties(Map<String, Double> properties) {
-        this.properties = properties;
-    }
-
-    @Override
-    public Map<String, Double> getProperties() {
-        return this.properties;
     }
 
     public Double get(String property) {
@@ -83,8 +74,28 @@ public abstract class DefaultShape implements Shape {
 
     protected abstract void drawOutline(Graphics canvas);
     protected abstract void drawFill(Graphics canvas);
-
-    public abstract boolean isPointInside(Point point);
-
     public abstract String[] properties();
+
+    @Override
+    public abstract boolean contains(Point point);
+
+    @Override
+    public void setDraggingPoint(Point point) {
+        setPosition(point);
+    }
+
+    @Override
+    public Point getDraggingPoint() {
+        return getPosition();
+    }
+
+    @Override
+    public void moveTo(Point point) {
+        setDraggingPoint(point);
+    }
+
+    public String toString()
+    {
+        return getKey();
+    }
 }

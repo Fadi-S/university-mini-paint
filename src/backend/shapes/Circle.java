@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.Shape;
+import backend.shapes.interfaces.Shape;
 import backend.utils.Distance;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ public class Circle extends DefaultShape implements Shape {
     }
 
     @Override
-    public boolean isPointInside(Point point) {
+    public boolean contains(Point point) {
         return get("radius") > Distance.between(point, getPosition());
     }
 

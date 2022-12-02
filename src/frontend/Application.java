@@ -1,7 +1,7 @@
 package frontend;
 
 import backend.Engine;
-import backend.Shape;
+import backend.shapes.interfaces.Shape;
 import backend.events.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.Rectangle;
@@ -28,6 +28,7 @@ public class Application {
     private JLabel mousePosition;
     private JPanel controlsPanel;
     private JPanel shapesButtonsPanel;
+    private JButton triangleBtn;
 
     private final Engine engine;
 
@@ -104,6 +105,7 @@ public class Application {
         lineSegmentBtn.addActionListener((e) -> create(new LineSegment()));
         squareBtn.addActionListener((e) -> create(new Square()));
         rectangleBtn.addActionListener((e) -> create(new Rectangle()));
+        triangleBtn.addActionListener((e) -> create(new Triangle()));
 
         deleteBtn.addActionListener((e) -> {
             if(selectedShape == null) {
@@ -128,7 +130,9 @@ public class Application {
                 if(! SwingUtilities.isLeftMouseButton(e)) {
                     return;
                 }
+
                 Integer shapeIndex = engine.getShapeIndexAtPoint(e.getPoint());
+
                 select(shapeIndex == null ? null : engine.getShapes()[shapeIndex]);
             }
             public void mouseClicked(MouseEvent e) {}
@@ -139,7 +143,13 @@ public class Application {
 
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseDragged(MouseEvent e) {}
+            public void mouseDragged(MouseEvent e) {
+                if(selectedShape == null) return;
+
+                selectedShape.moveTo(e.getPoint());
+
+                engine.refresh();
+            }
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());

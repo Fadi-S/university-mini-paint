@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.Shape;
+import backend.shapes.interfaces.Shape;
 import backend.utils.Distance;
 
 import java.awt.*;
@@ -32,7 +32,7 @@ public class LineSegment extends DefaultShape implements Shape {
     }
 
     @Override
-    public boolean isPointInside(Point point) {
+    public boolean contains(Point point) {
         Point startPoint = getPosition();
         Point endPoint = new Point(get("x2").intValue(), get("y2").intValue());
 
@@ -47,6 +47,18 @@ public class LineSegment extends DefaultShape implements Shape {
         Point startPoint = getPosition();
 
         return Distance.between(startPoint, endPoint);
+    }
+
+    public void moveTo(Point point) {
+        Point oldPoint = getPosition();
+
+        int x = point.x - oldPoint.x;
+        int y = point.y - oldPoint.y;
+
+        set("x2", get("x2") + x);
+        set("y2", get("y2") + y);
+
+        setDraggingPoint(point);
     }
 
     public String[] properties() {

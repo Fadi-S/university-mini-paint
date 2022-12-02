@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.Shape;
+import backend.shapes.interfaces.Shape;
 
 public class Square extends Rectangle implements Shape {
 

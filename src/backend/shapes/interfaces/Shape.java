@@ -1,28 +1,20 @@
-package backend;
+package backend.shapes.interfaces;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Map;
 
-public interface Shape {
+public interface Shape extends Movable {
 
     void setPosition(Point position);
     Point getPosition();
-
-    void setProperties(Map<String, Double> properties);
-    Map<String, Double> getProperties();
 
     void setColor(Color color);
     Color getColor();
     void setFillColor(Color color);
     Color getFillColor();
-
-    boolean isPointInside(Point point);
+    void draw(Graphics canvas);
 
     String getKey();
-
     double area();
-
-    void draw(Graphics canvas);
 }

@@ -1,6 +1,8 @@
 package backend;
 
 import backend.events.ShapesChangedListener;
+import backend.shapes.DefaultShape;
+import backend.shapes.interfaces.Shape;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class Engine implements DrawingEngine {
     public Integer getShapeIndexAtPoint(Point point)
     {
         Shape selectedShape = shapes.stream()
-                .filter((shape) -> shape.isPointInside(point))
+                .filter((shape) -> shape.contains(point))
                 .min(Comparator.comparing(Shape::area))
                 .orElse(null);
 
