@@ -2,8 +2,6 @@ package backend;
 
 import backend.shapes.interfaces.Shape;
 
-import java.awt.Graphics;
-
 public interface DrawingEngine {
     void addShape(Shape shape);
 
@@ -11,5 +9,5 @@ public interface DrawingEngine {
 
     Shape[] getShapes();
 
-    void refresh(Graphics canvas);
+    void refresh();
 }

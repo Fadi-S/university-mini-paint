@@ -1,38 +1,29 @@
 package backend;
 
 import backend.events.ShapesChangedListener;
-import backend.shapes.DefaultShape;
 import backend.shapes.interfaces.Shape;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Engine implements DrawingEngine {
+abstract public class Engine extends JPanel implements DrawingEngine {
 
-    private final ArrayList<Shape> shapes = new ArrayList<>();
-    private final ArrayList<ShapesChangedListener> listeners = new ArrayList<>();
-    private Graphics canvas;
+    protected final ArrayList<Shape> shapes = new ArrayList<>();
+    protected final ArrayList<ShapesChangedListener> listeners = new ArrayList<>();
 
-    public Engine(Graphics canvas) {
-        this.canvas = canvas;
-    }
+    public Engine() {}
 
     public void addListener(ShapesChangedListener toAdd) {
         listeners.add(toAdd);
-    }
-
-    public void setCanvas(Graphics canvas) {
-        this.canvas = canvas;
-
-        this.refresh(canvas);
     }
 
     @Override
     public void addShape(Shape shape) {
         shapes.add(shape);
 
-        refresh(this.canvas);
+        refresh();
 
         listeners.forEach(listener -> listener.shapeAdded(shape));
     }
@@ -41,7 +32,7 @@ public class Engine implements DrawingEngine {
     public void removeShape(Shape shape) {
         shapes.removeIf(currentShape -> currentShape.getKey().equals(shape.getKey()));
 
-        refresh(this.canvas);
+        refresh();
 
         listeners.forEach(listener -> listener.shapeRemoved(shape));
     }
@@ -49,15 +40,6 @@ public class Engine implements DrawingEngine {
     @Override
     public Shape[] getShapes() {
         return shapes.toArray(new Shape[0]);
-    }
-
-    @Override
-    public void refresh(Graphics canvas) {
-        canvas.clearRect(0, 0, 9999, 9999);
-
-        shapes.forEach(shape -> shape.draw(canvas));
-
-        listeners.forEach(ShapesChangedListener::refreshed);
     }
 
     public Integer getShapeIndexAtPoint(Point point)
@@ -70,13 +52,5 @@ public class Engine implements DrawingEngine {
         if(selectedShape == null) return null;
 
         return shapes.indexOf(selectedShape);
-    }
-
-    public void refresh() throws NullPointerException {
-        if(this.canvas == null) {
-            throw new NullPointerException("Canvas must not be null");
-        }
-
-        refresh(this.canvas);
     }
 }

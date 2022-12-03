@@ -30,7 +30,7 @@ public class Application {
     private JPanel shapesButtonsPanel;
     private JButton triangleBtn;
 
-    private final Engine engine;
+    private final Canvas canvasEngine = new Canvas();
 
     Shape selectedShape;
 
@@ -46,28 +46,9 @@ public class Application {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
-        engine = new Engine(canvas.getGraphics());
+        canvas.add(canvasEngine);
 
-        final AtomicBoolean shouldRefresh = new AtomicBoolean(false);
-        frame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                shouldRefresh.set(true);
-
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(250);
-                        if(! shouldRefresh.get()) return;
-                        engine.setCanvas(canvas.getGraphics());
-                        shouldRefresh.set(false);
-                    } catch (InterruptedException ignored) {}
-                }).start();
-
-                sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
-            }
-        });
-
-        engine.addListener(new ShapesChangedListener() {
+        canvasEngine.addListener(new ShapesChangedListener() {
             @Override
             public void shapeAdded(Shape shape) {
                 shapesSelectBox.addItem(shape.getKey());
@@ -78,11 +59,6 @@ public class Application {
                 shapesSelectBox.removeItem(shape.getKey());
                 select(null);
             }
-
-            @Override
-            public void refreshed() {
-                drawCenterPoint();
-            }
         });
 
         shapesSelectBox.addItemListener(event -> {
@@ -91,7 +67,7 @@ public class Application {
             }
             String shapeKey = (String) event.getItem();
             Shape selectShape = null;
-            for (Shape shape : engine.getShapes()) {
+            for (Shape shape : canvasEngine.getShapes()) {
                 if(shape.getKey().equals(shapeKey)) {
                     selectShape = shape;
                     break;
@@ -112,7 +88,7 @@ public class Application {
                 JOptionPane.showMessageDialog(frame, "No shape selected");
                 return;
             }
-            engine.removeShape(selectedShape);
+            canvasEngine.removeShape(selectedShape);
         });
 
         colorizeBtn.addActionListener((e) -> {
@@ -131,9 +107,9 @@ public class Application {
                     return;
                 }
 
-                Integer shapeIndex = engine.getShapeIndexAtPoint(e.getPoint());
+                Integer shapeIndex = canvasEngine.getShapeIndexAtPoint(e.getPoint());
 
-                select(shapeIndex == null ? null : engine.getShapes()[shapeIndex]);
+                select(shapeIndex == null ? null : canvasEngine.getShapes()[shapeIndex]);
             }
             public void mouseClicked(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
@@ -148,7 +124,7 @@ public class Application {
 
                 selectedShape.moveTo(e.getPoint());
 
-                engine.refresh();
+                canvasEngine.refresh();
             }
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -158,11 +134,13 @@ public class Application {
     }
 
     private void select(Shape shape) {
+        canvasEngine.setSelectedShape(shape);
+
         if(shape == null) {
             selectedShape = null;
             selectedShapeLabel.setText("No shape selected");
             shapesSelectBox.setSelectedItem(null);
-            engine.refresh();
+            canvasEngine.refresh();
             return;
         }
 
@@ -172,17 +150,7 @@ public class Application {
         if(!shape.getKey().equals(shapesSelectBox.getSelectedItem()))
             shapesSelectBox.setSelectedItem(shape.getKey());
 
-        engine.refresh();
-    }
-
-    private void drawCenterPoint()
-    {
-        if(selectedShape == null) return;
-
-        Point center = selectedShape.getPosition();
-        Graphics graphics = canvas.getGraphics();
-        graphics.drawLine(center.x, center.y-2, center.x, center.y+2);
-        graphics.drawLine(center.x-2, center.y, center.x+2, center.y);
+        canvasEngine.refresh();
     }
 
     private void enable(boolean value) {
@@ -205,7 +173,7 @@ public class Application {
 
             if(!shouldRender) return;
 
-            engine.addShape(shape);
+            canvasEngine.addShape(shape);
         });
     }
 
@@ -215,7 +183,7 @@ public class Application {
         colorPicker.getColors().whenComplete((Boolean shouldRender, Object o2) -> {
             enable(true);
 
-            engine.refresh();
+            canvasEngine.refresh();
         });
     }
 }
