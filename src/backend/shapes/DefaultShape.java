@@ -98,4 +98,10 @@ public abstract class DefaultShape implements Shape, Movable {
     {
         return getKey();
     }
+
+    public String getKey() {
+        return "shape-" + key;
+    }
+
+    public abstract double area();
 }

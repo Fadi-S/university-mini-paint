@@ -1,16 +1,13 @@
 package frontend;
 
-import backend.Engine;
 import backend.shapes.interfaces.Shape;
 import backend.events.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.Rectangle;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Application {
     private final JFrame frame;
@@ -51,12 +48,12 @@ public class Application {
         canvasEngine.addListener(new ShapesChangedListener() {
             @Override
             public void shapeAdded(Shape shape) {
-                shapesSelectBox.addItem(shape.getKey());
+                shapesSelectBox.addItem(shape.toString());
             }
 
             @Override
             public void shapeRemoved(Shape shape) {
-                shapesSelectBox.removeItem(shape.getKey());
+                shapesSelectBox.removeItem(shape);
                 select(null);
             }
         });
@@ -68,7 +65,7 @@ public class Application {
             String shapeKey = (String) event.getItem();
             Shape selectShape = null;
             for (Shape shape : canvasEngine.getShapes()) {
-                if(shape.getKey().equals(shapeKey)) {
+                if(shape.toString().equals(shapeKey)) {
                     selectShape = shape;
                     break;
                 }
@@ -145,10 +142,10 @@ public class Application {
         }
 
         selectedShape = shape;
-        selectedShapeLabel.setText("Shape: " + selectedShape.getKey());
+        selectedShapeLabel.setText("Shape: " + selectedShape);
 
-        if(!shape.getKey().equals(shapesSelectBox.getSelectedItem()))
-            shapesSelectBox.setSelectedItem(shape.getKey());
+        if(!shape.toString().equals(shapesSelectBox.getSelectedItem()))
+            shapesSelectBox.setSelectedItem(shape);
 
         canvasEngine.refresh();
     }

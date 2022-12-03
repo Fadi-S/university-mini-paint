@@ -14,7 +14,4 @@ public interface Shape extends Movable {
     void setFillColor(Color color);
     Color getFillColor();
     void draw(Graphics canvas);
-
-    String getKey();
-    double area();
 }

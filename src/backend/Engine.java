@@ -1,6 +1,7 @@
 package backend;
 
 import backend.events.ShapesChangedListener;
+import backend.shapes.DefaultShape;
 import backend.shapes.interfaces.Shape;
 
 import javax.swing.*;
@@ -12,8 +13,6 @@ abstract public class Engine extends JPanel implements DrawingEngine {
 
     protected final ArrayList<Shape> shapes = new ArrayList<>();
     protected final ArrayList<ShapesChangedListener> listeners = new ArrayList<>();
-
-    public Engine() {}
 
     public void addListener(ShapesChangedListener toAdd) {
         listeners.add(toAdd);
@@ -30,7 +29,7 @@ abstract public class Engine extends JPanel implements DrawingEngine {
 
     @Override
     public void removeShape(Shape shape) {
-        shapes.removeIf(currentShape -> currentShape.getKey().equals(shape.getKey()));
+        shapes.removeIf(currentShape -> currentShape.toString().equals(shape.toString()));
 
         refresh();
 
@@ -46,7 +45,7 @@ abstract public class Engine extends JPanel implements DrawingEngine {
     {
         Shape selectedShape = shapes.stream()
                 .filter((shape) -> shape.contains(point))
-                .min(Comparator.comparing(Shape::area))
+                .min(Comparator.comparing((shape) -> ((DefaultShape) shape).area()))
                 .orElse(null);
 
         if(selectedShape == null) return null;

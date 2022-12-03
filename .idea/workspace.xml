@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/paintLab8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/frontend/Canvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab7.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Lab7.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/DrawingEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/DrawingEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/events/ShapesChangedListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/interfaces/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/interfaces/Shape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +132,7 @@
       <workItem from="1669672856957" duration="347000" />
       <workItem from="1669830719750" duration="124000" />
       <workItem from="1669838756803" duration="437000" />
-      <workItem from="1669989769122" duration="23828000" />
+      <workItem from="1669989769122" duration="26081000" />
     </task>
     <servers />
   </component>
