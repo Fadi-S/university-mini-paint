@@ -1,7 +1,7 @@
 package frontend;
 
 import backend.Engine;
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 
 import javax.swing.plaf.BorderUIResource;
 import java.awt.*;

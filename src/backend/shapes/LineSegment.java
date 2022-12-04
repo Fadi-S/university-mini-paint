@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 import backend.utils.Distance;
 
 import java.awt.*;
@@ -50,7 +50,11 @@ public class LineSegment extends DefaultShape implements Shape {
     }
 
     public void moveTo(Point point) {
+        Point reference = getDraggingPoint();
         Point oldPoint = getPosition();
+
+        point.x += oldPoint.x - reference.x;
+        point.y += oldPoint.y - reference.y;
 
         int x = point.x - oldPoint.x;
         int y = point.y - oldPoint.y;
@@ -58,7 +62,7 @@ public class LineSegment extends DefaultShape implements Shape {
         set("x2", get("x2") + x);
         set("y2", get("y2") + y);
 
-        setDraggingPoint(point);
+        setPosition(point);
     }
 
     public String[] properties() {

@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 
 import java.awt.*;
 

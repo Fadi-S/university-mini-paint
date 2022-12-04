@@ -42,7 +42,7 @@
         </constraints>
         <properties>
           <labelFor value="4e39e"/>
-          <text value="X Position"/>
+          <text value="X"/>
         </properties>
       </component>
       <component id="9c54" class="javax.swing.JLabel">
@@ -51,7 +51,7 @@
         </constraints>
         <properties>
           <labelFor value="96fca"/>
-          <text value="Y Position"/>
+          <text value="Y"/>
         </properties>
       </component>
       <component id="f009f" class="javax.swing.JButton" binding="submitBtn">

@@ -2,7 +2,7 @@ package backend;
 
 import backend.events.ShapesChangedListener;
 import backend.shapes.DefaultShape;
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 
 import javax.swing.*;
 import java.awt.*;

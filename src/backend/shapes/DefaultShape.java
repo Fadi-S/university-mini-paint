@@ -1,7 +1,7 @@
 package backend.shapes;
 
-import backend.shapes.interfaces.Movable;
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Movable;
+import backend.interfaces.Shape;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -16,6 +16,8 @@ public abstract class DefaultShape implements Shape, Movable {
     private Color fillColor;
     private Point point;
     private final Map<String, Double> properties;
+
+    private Point draggingPoint;
 
     DefaultShape() {
         properties = new HashMap<>();
@@ -81,17 +83,23 @@ public abstract class DefaultShape implements Shape, Movable {
 
     @Override
     public void setDraggingPoint(Point point) {
-        setPosition(point);
+        this.draggingPoint = point;
     }
 
     @Override
     public Point getDraggingPoint() {
-        return getPosition();
+        return draggingPoint;
     }
 
     @Override
     public void moveTo(Point point) {
-        setDraggingPoint(point);
+        Point reference = getDraggingPoint();
+        Point oldPoint = getPosition();
+
+        point.x += oldPoint.x - reference.x;
+        point.y += oldPoint.y - reference.y;
+
+        setPosition(point);
     }
 
     public String toString()

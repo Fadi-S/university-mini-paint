@@ -1,6 +1,6 @@
 package backend.events;
 
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 
 import java.util.EventListener;
 

@@ -1,6 +1,6 @@
 package frontend;
 
-import backend.shapes.interfaces.Shape;
+import backend.interfaces.Shape;
 import backend.events.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.Rectangle;
@@ -42,8 +42,8 @@ public class Application {
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
         canvas.add(canvasEngine);
+        sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
 
         canvasEngine.addListener(new ShapesChangedListener() {
             @Override
@@ -53,9 +53,19 @@ public class Application {
 
             @Override
             public void shapeRemoved(Shape shape) {
-                shapesSelectBox.removeItem(shape);
+                shapesSelectBox.removeItem(shape.toString());
                 select(null);
             }
+        });
+
+        frame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                sizeLabel.setText(canvasEngine.getWidth() + "x" + canvasEngine.getHeight());
+            }
+            public void componentMoved(ComponentEvent e) {}
+            public void componentShown(ComponentEvent e) {}
+            public void componentHidden(ComponentEvent e) {}
         });
 
         shapesSelectBox.addItemListener(event -> {
@@ -100,13 +110,13 @@ public class Application {
         canvas.addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(! SwingUtilities.isLeftMouseButton(e)) {
-                    return;
-                }
-
                 Integer shapeIndex = canvasEngine.getShapeIndexAtPoint(e.getPoint());
 
                 select(shapeIndex == null ? null : canvasEngine.getShapes()[shapeIndex]);
+
+                if(selectedShape != null) {
+                    selectedShape.setDraggingPoint(e.getPoint());
+                }
             }
             public void mouseClicked(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
@@ -120,6 +130,8 @@ public class Application {
                 if(selectedShape == null) return;
 
                 selectedShape.moveTo(e.getPoint());
+
+                selectedShape.setDraggingPoint(e.getPoint());
 
                 canvasEngine.refresh();
             }
@@ -145,7 +157,7 @@ public class Application {
         selectedShapeLabel.setText("Shape: " + selectedShape);
 
         if(!shape.toString().equals(shapesSelectBox.getSelectedItem()))
-            shapesSelectBox.setSelectedItem(shape);
+            shapesSelectBox.setSelectedItem(shape.toString());
 
         canvasEngine.refresh();
     }
@@ -175,6 +187,11 @@ public class Application {
     }
 
     private void chooseColor(DefaultShape shape) {
+        if(shapePropertiesForm != null) {
+            shapePropertiesForm.requestFocus();
+            return;
+        }
+
         ColorPicker colorPicker = new ColorPicker(shape);
         enable(false);
         colorPicker.getColors().whenComplete((Boolean shouldRender, Object o2) -> {

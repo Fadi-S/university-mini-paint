@@ -1,4 +1,4 @@
-package backend.shapes.interfaces;
+package backend.interfaces;
 
 import java.awt.Color;
 import java.awt.Graphics;

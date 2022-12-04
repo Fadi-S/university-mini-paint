@@ -30,10 +30,20 @@ public class Triangle extends DefaultShape {
 
     private Point[] getPoints()
     {
-        final Point p1 = getPosition();
+        Point p1;
         final Point p2 = new Point(get("x2").intValue(), get("y2").intValue());
         final Point p3 = new Point(get("x3").intValue(), get("y3").intValue());
+        if(get("x1") == 0) {
+            p1 = getPosition();
+            set("x1", p1.x+.0);
+            set("y1", p1.y+.0);
+        }
+        p1 = new Point(get("x1").intValue(), get("y1").intValue());
 
+        setPosition(new Point(
+                (p1.x+p2.x+p3.x) / 3,
+                (p1.y+p2.y+p3.y) / 3
+        ));
         return new Point[] {
                 p1, p2, p3
         };
@@ -79,17 +89,23 @@ public class Triangle extends DefaultShape {
     }
 
     public void moveTo(Point point) {
-        Point oldPoint = getPosition();
+        Point reference = getDraggingPoint();
+        Point oldPoint = new Point(get("x1").intValue(), get("y1").intValue());
+
+        point.x += oldPoint.x - reference.x;
+        point.y += oldPoint.y - reference.y;
 
         int x = point.x - oldPoint.x;
         int y = point.y - oldPoint.y;
 
-        set("x2", get("x2") + x);
-        set("x3", get("x3") + x);
-        set("y2", get("y2") + y);
-        set("y3", get("y3") + y);
+        set("x1", get("x1") + x);
+        set("y1", get("y1") + y);
 
-        setDraggingPoint(point);
+        set("y2", get("y2") + y);
+        set("x2", get("x2") + x);
+
+        set("x3", get("x3") + x);
+        set("y3", get("y3") + y);
     }
 
     @Override
