@@ -47,8 +47,6 @@ public class ColorPicker {
             shape.setColor(outlineColor.get());
         });
 
-        fillColorBtn.setVisible(shape.get("outlineOnly") == 0);
-
         AtomicReference<Color> fillColor = new AtomicReference<>(shape.getFillColor());
         fillColorBtn.setUI(new CustomButton());
         fillColorBtn.setBackground(fillColor.get());

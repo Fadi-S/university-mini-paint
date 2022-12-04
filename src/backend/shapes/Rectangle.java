@@ -6,11 +6,19 @@ import java.awt.*;
 
 public class Rectangle extends DefaultShape implements Shape {
 
+    private final int width;
+    private final int height;
+
+    public Rectangle(Point point, int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        setPosition(point);
+    }
+
     @Override
     public boolean contains(Point point) {
         Point center = getPosition();
-        int height = get("height").intValue();
-        int width = get("width").intValue();
 
         return new java.awt.Rectangle(
                 center.x - (width/2),
@@ -36,16 +44,12 @@ public class Rectangle extends DefaultShape implements Shape {
     @Override
     protected void drawOutline(Graphics canvas) {
         Point center = getPosition();
-        int height = get("height").intValue();
-        int width = get("width").intValue();
         canvas.drawRect(center.x - (width / 2), center.y - (height / 2), width, height);
     }
 
     @Override
     protected void drawFill(Graphics canvas) {
         Point point = getPosition();
-        int height = get("height").intValue();
-        int width = get("width").intValue();
         canvas.fillRect(point.x - (width/2)+1, point.y - (height/2)+1, width-1, height-1);
     }
 
@@ -55,13 +59,6 @@ public class Rectangle extends DefaultShape implements Shape {
     }
 
     public double area() {
-        return get("width") * get("height");
-    }
-
-    @Override
-    public String[] properties() {
-        return new String[] {
-            "height", "width"
-        };
+        return width * height;
     }
 }

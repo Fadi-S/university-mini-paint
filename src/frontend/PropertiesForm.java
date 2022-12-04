@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.shapes.DefaultShape;
+import backend.shapes.creator.ShapeCreator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +19,8 @@ public class PropertiesForm {
 
     CompletableFuture<Boolean> response;
 
-    public PropertiesForm(DefaultShape shape, JPanel canvas) {
-        frame = new JFrame("Properties of " + shape.getKey());
+    public PropertiesForm(ShapeCreator shapeCreator, JPanel canvas) {
+        frame = new JFrame("Properties of " + shapeCreator.getName());
         frame.setContentPane(panel);
         frame.setSize(400, 350);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -28,7 +29,7 @@ public class PropertiesForm {
         JRootPane rootPane = SwingUtilities.getRootPane(panel);
         rootPane.setDefaultButton(submitBtn);
 
-        String[] props = shape.properties();
+        String[] props = shapeCreator.properties();
 
         GridLayout layout = new GridLayout(props.length*2, 1);
         formPanel.setLayout(layout);
@@ -69,15 +70,15 @@ public class PropertiesForm {
                     throw new NumberFormatException();
                 }
 
-                shape.setPosition(new Point(x, y));
+                shapeCreator.setPosition(new Point(x, y));
 
                 for(int i=0; i<props.length; i++) {
-                    double val = Double.parseDouble(values[i]);
+                    int val = Integer.parseInt(values[i]);
                     if(val <= 0) {
                         throw new NumberFormatException();
                     }
 
-                    shape.set(props[i], val);
+                    shapeCreator.set(props[i], val);
                 }
 
                 response.complete(true);

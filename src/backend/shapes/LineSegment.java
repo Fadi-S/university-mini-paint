@@ -7,10 +7,17 @@ import java.awt.*;
 
 public class LineSegment extends DefaultShape implements Shape {
 
-    public LineSegment() {
-        super();
+    private final Point point1;
+    private final Point point2;
 
-        set("outlineOnly", 1.0);
+    public LineSegment(Point point1, Point point2) {
+        this.point1 = point1;
+        this.point2 = point2;
+
+        setPosition(new Point(
+                (point1.x + point2.x) / 2,
+                (point1.y + point2.y) / 2
+        ));
     }
 
     @Override
@@ -20,10 +27,7 @@ public class LineSegment extends DefaultShape implements Shape {
 
     @Override
     protected void drawOutline(Graphics canvas) {
-        Point startPoint = getPosition();
-        int x2 = get("x2").intValue();
-        int y2 = get("y2").intValue();
-        canvas.drawLine(startPoint.x, startPoint.y, x2, y2);
+        canvas.drawLine(point1.x, point1.y, point2.x, point2.y);
     }
 
     @Override
@@ -33,20 +37,14 @@ public class LineSegment extends DefaultShape implements Shape {
 
     @Override
     public boolean contains(Point point) {
-        Point startPoint = getPosition();
-        Point endPoint = new Point(get("x2").intValue(), get("y2").intValue());
-
-        double lineLength = Distance.between(startPoint, endPoint);
-        double lengthFromPoint = Distance.between(point, startPoint) + Distance.between(point, endPoint);
+        double lineLength = Distance.between(point1, point2);
+        double lengthFromPoint = Distance.between(point, point1) + Distance.between(point, point2);
 
         return Math.abs(lengthFromPoint - lineLength) <= 2;
     }
 
     public double area() {
-        Point endPoint = new Point(get("x2").intValue(), get("y2").intValue());
-        Point startPoint = getPosition();
-
-        return Distance.between(startPoint, endPoint);
+        return Distance.between(point1, point2);
     }
 
     public void moveTo(Point point) {
@@ -59,10 +57,16 @@ public class LineSegment extends DefaultShape implements Shape {
         int x = point.x - oldPoint.x;
         int y = point.y - oldPoint.y;
 
-        set("x2", get("x2") + x);
-        set("y2", get("y2") + y);
+        point1.x += x;
+        point1.y += y;
 
-        setPosition(point);
+        point2.x += x;
+        point2.y += y;
+
+        setPosition(new Point(
+                (point1.x + point2.x) / 2,
+                (point1.y + point2.y) / 2
+        ));
     }
 
     public String[] properties() {

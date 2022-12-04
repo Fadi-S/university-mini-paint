@@ -6,47 +6,39 @@ import java.awt.*;
 
 public class Triangle extends DefaultShape {
 
+    private final Point point1;
+    private final Point point2;
+    private final Point point3;
+
+    public Triangle(Point point1, Point point2, Point point3) {
+        this.point1 = point1;
+        this.point2 = point2;
+        this.point3 = point3;
+
+        setPosition(
+                new Point(
+                        (point1.x+point2.x+point3.x) / 3,
+                        (point1.y+point2.y+point3.y) / 3
+                )
+        );
+    }
+
     @Override
     protected void drawOutline(Graphics canvas) {
-        Point[] points = getPoints();
-
         canvas.drawPolygon(
-                new int[]{points[0].x, points[1].x, points[2].x,},
-                new int[]{points[0].y, points[1].y, points[2].y,},
+                new int[]{point1.x, point2.x, point3.x,},
+                new int[]{point1.y, point2.y, point3.y,},
                 3
         );
     }
 
     @Override
     protected void drawFill(Graphics canvas) {
-        Point[] points = getPoints();
-
         canvas.fillPolygon(
-                new int[]{points[0].x, points[1].x, points[2].x,},
-                new int[]{points[0].y, points[1].y, points[2].y,},
+                new int[]{point1.x, point2.x, point3.x,},
+                new int[]{point1.y, point2.y, point3.y,},
                 3
         );
-    }
-
-    private Point[] getPoints()
-    {
-        Point p1;
-        final Point p2 = new Point(get("x2").intValue(), get("y2").intValue());
-        final Point p3 = new Point(get("x3").intValue(), get("y3").intValue());
-        if(get("x1") == 0) {
-            p1 = getPosition();
-            set("x1", p1.x+.0);
-            set("y1", p1.y+.0);
-        }
-        p1 = new Point(get("x1").intValue(), get("y1").intValue());
-
-        setPosition(new Point(
-                (p1.x+p2.x+p3.x) / 3,
-                (p1.y+p2.y+p3.y) / 3
-        ));
-        return new Point[] {
-                p1, p2, p3
-        };
     }
 
     private double sign(Point p1, Point p2, Point p3) {
@@ -55,14 +47,12 @@ public class Triangle extends DefaultShape {
 
     @Override
     public boolean contains(Point point) {
-        Point[] points = getPoints();
-
         double d1, d2, d3;
         boolean hasNegative, hasPositive;
 
-        d1 = sign(point, points[0], points[1]);
-        d2 = sign(point, points[1], points[2]);
-        d3 = sign(point, points[2], points[0]);
+        d1 = sign(point, point1, point2);
+        d2 = sign(point, point2, point3);
+        d3 = sign(point, point3, point1);
 
         hasNegative = (d1 < 0) || (d2 < 0) || (d3 < 0);
         hasPositive = (d1 > 0) || (d2 > 0) || (d3 > 0);
@@ -77,11 +67,9 @@ public class Triangle extends DefaultShape {
 
     @Override
     public double area() {
-        Point[] points = getPoints();
-
-        double a = Distance.between(points[0], points[1]);
-        double b = Distance.between(points[0], points[2]);
-        double c = Distance.between(points[1], points[2]);
+        double a = Distance.between(point1, point2);
+        double b = Distance.between(point1, point3);
+        double c = Distance.between(point2, point3);
 
         double s = (a+b+c) / 2; // semi perimeter
 
@@ -90,7 +78,7 @@ public class Triangle extends DefaultShape {
 
     public void moveTo(Point point) {
         Point reference = getDraggingPoint();
-        Point oldPoint = new Point(get("x1").intValue(), get("y1").intValue());
+        Point oldPoint = point1;
 
         point.x += oldPoint.x - reference.x;
         point.y += oldPoint.y - reference.y;
@@ -98,20 +86,20 @@ public class Triangle extends DefaultShape {
         int x = point.x - oldPoint.x;
         int y = point.y - oldPoint.y;
 
-        set("x1", get("x1") + x);
-        set("y1", get("y1") + y);
+        point1.x += x;
+        point1.y += y;
 
-        set("y2", get("y2") + y);
-        set("x2", get("x2") + x);
+        point2.x += x;
+        point2.y += y;
 
-        set("x3", get("x3") + x);
-        set("y3", get("y3") + y);
-    }
+        point3.x += x;
+        point3.y += y;
 
-    @Override
-    public String[] properties() {
-        return new String[]{
-                "x2", "y2", "x3", "y3"
-        };
+        setPosition(
+                new Point(
+                        (point1.x+point2.x+point3.x) / 3,
+                        (point1.y+point2.y+point3.y) / 3
+                )
+        );
     }
 }

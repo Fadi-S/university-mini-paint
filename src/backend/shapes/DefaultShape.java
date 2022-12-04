@@ -4,8 +4,6 @@ import backend.interfaces.Movable;
 import backend.interfaces.Shape;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class DefaultShape implements Shape, Movable {
 
@@ -14,16 +12,9 @@ public abstract class DefaultShape implements Shape, Movable {
 
     private Color color;
     private Color fillColor;
-    private Point point;
-    private final Map<String, Double> properties;
+    private Point point = new Point();
 
     private Point draggingPoint;
-
-    DefaultShape() {
-        properties = new HashMap<>();
-
-        this.point = new Point();
-    }
 
     @Override
     public void setPosition(Point position) {
@@ -33,14 +24,6 @@ public abstract class DefaultShape implements Shape, Movable {
     @Override
     public Point getPosition() {
         return this.point;
-    }
-
-    public Double get(String property) {
-        return this.properties.getOrDefault(property, 0.0);
-    }
-
-    public void set(String property, Double value) {
-        this.properties.put(property, value);
     }
 
     @Override
@@ -76,7 +59,6 @@ public abstract class DefaultShape implements Shape, Movable {
 
     protected abstract void drawOutline(Graphics canvas);
     protected abstract void drawFill(Graphics canvas);
-    public abstract String[] properties();
 
     @Override
     public abstract boolean contains(Point point);

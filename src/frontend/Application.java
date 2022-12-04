@@ -4,6 +4,7 @@ import backend.interfaces.Shape;
 import backend.events.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.Rectangle;
+import backend.shapes.creator.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -84,11 +85,11 @@ public class Application {
             select(selectShape);
         });
 
-        circleBtn.addActionListener((e) -> create(new Circle()));
-        lineSegmentBtn.addActionListener((e) -> create(new LineSegment()));
-        squareBtn.addActionListener((e) -> create(new Square()));
-        rectangleBtn.addActionListener((e) -> create(new Rectangle()));
-        triangleBtn.addActionListener((e) -> create(new Triangle()));
+        circleBtn.addActionListener((e) -> create(new CircleCreator()));
+        lineSegmentBtn.addActionListener((e) -> create(new LineSegmentCreator()));
+        squareBtn.addActionListener((e) -> create(new SquareCreator()));
+        rectangleBtn.addActionListener((e) -> create(new RectangleCreator()));
+        triangleBtn.addActionListener((e) -> create(new TriangleCreator()));
 
         deleteBtn.addActionListener((e) -> {
             if(selectedShape == null) {
@@ -169,18 +170,20 @@ public class Application {
 
     private JFrame shapePropertiesForm = null;
 
-    private void create(DefaultShape shape) {
+    private void create(ShapeCreator shapeCreator) {
         if(shapePropertiesForm != null) {
             shapePropertiesForm.requestFocus();
             return;
         }
 
-        PropertiesForm form = new PropertiesForm(shape, canvas);
+        PropertiesForm form = new PropertiesForm(shapeCreator, canvas);
         shapePropertiesForm = form.getFrame();
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
             shapePropertiesForm = null;
 
             if(!shouldRender) return;
+
+            Shape shape = shapeCreator.create();
 
             canvasEngine.addShape(shape);
         });
