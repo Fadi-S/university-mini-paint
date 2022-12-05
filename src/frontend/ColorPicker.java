@@ -1,6 +1,6 @@
 package frontend;
 
-import backend.shapes.AbstractShapeClass;
+import backend.interfaces.Shape;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -25,7 +25,7 @@ public class ColorPicker {
         }
     }
 
-    public ColorPicker(AbstractShapeClass shape) {
+    public ColorPicker(Shape shape) {
         frame = new JFrame("Pick color for " + shape.toString());
         frame.setSize(300, 300);
         frame.setContentPane(panel);

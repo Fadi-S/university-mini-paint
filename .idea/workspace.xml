@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/ShapesChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/ShapesChangedListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Canvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/ColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +137,7 @@
       <workItem from="1670090130627" duration="16737000" />
       <workItem from="1670178221249" duration="83000" />
       <workItem from="1670178319623" duration="73000" />
-      <workItem from="1670181690797" duration="19411000" />
+      <workItem from="1670181690797" duration="22205000" />
     </task>
     <servers />
   </component>

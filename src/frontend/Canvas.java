@@ -46,19 +46,15 @@ public class Canvas extends JPanel implements DrawingEngine {
 
     @Override
     public Shape[] getShapes() {
-        return shapes.toArray(new Shape[0]);
+        return shapes.toArray(Shape[]::new);
     }
 
-    public Integer getShapeIndexAtPoint(Point point)
+    public Shape getShapeAtPoint(Point point)
     {
-        Shape selectedShape = shapes.stream()
+        return shapes.stream()
                 .filter((shape) -> shape.contains(point))
                 .min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
                 .orElse(null);
-
-        if(selectedShape == null) return null;
-
-        return shapes.indexOf(selectedShape);
     }
 
     public void setSelectedShape(Shape selectedShape) {

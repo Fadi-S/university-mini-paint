@@ -2,15 +2,15 @@ package frontend;
 
 import backend.interfaces.Shape;
 import backend.interfaces.ShapesChangedListener;
-import backend.shapes.*;
 import backend.shapes.creator.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
 
 public class Application {
-    private final JFrame frame;
+    private final JFrame frame = new JFrame("Vector Drawing Application");
     private JPanel panel;
     private JButton circleBtn;
     private JButton lineSegmentBtn;
@@ -35,16 +35,36 @@ public class Application {
         new Application();
     }
 
-    Application()
+    private void setupFrame()
     {
-        frame = new JFrame("Vector Drawing Application");
         frame.setSize(1000, 600);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         canvas.add(canvasEngine);
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
+    }
 
+    Application()
+    {
+        setupFrame();
+
+        setupEvents();
+
+        circleBtn.addActionListener((e) -> create(new CircleCreator()));
+        lineSegmentBtn.addActionListener((e) -> create(new LineSegmentCreator()));
+        squareBtn.addActionListener((e) -> create(new SquareCreator()));
+        rectangleBtn.addActionListener((e) -> create(new RectangleCreator()));
+        triangleBtn.addActionListener((e) -> create(new TriangleCreator()));
+
+        deleteBtn.addActionListener(this::delete);
+        colorizeBtn.addActionListener(this::chooseColor);
+    }
+
+    private void setupEvents() {
+        /*
+        * Shapes listener
+        * */
         canvasEngine.addListener(new ShapesChangedListener() {
             @Override
             public void shapeAdded(Shape shape) {
@@ -58,6 +78,10 @@ public class Application {
             }
         });
 
+
+        /*
+        * Frame resize listener
+        * */
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -68,54 +92,37 @@ public class Application {
             public void componentHidden(ComponentEvent e) {}
         });
 
+
+        /*
+        * Combobox Listener
+        * */
         shapesSelectBox.addItemListener(event -> {
             if (event.getStateChange() != ItemEvent.SELECTED || !shapesSelectBox.hasFocus()) {
                 return;
             }
-            String shapeKey = (String) event.getItem();
-            Shape selectShape = null;
-            for (Shape shape : canvasEngine.getShapes()) {
-                if(shape.toString().equals(shapeKey)) {
-                    selectShape = shape;
-                    break;
-                }
-            }
+            Shape selectShape = Arrays.stream(canvasEngine.getShapes())
+                    .filter((s) -> s.toString().equals(event.getItem()))
+                    .findFirst()
+                    .orElse(null);
+
             if(selectShape == null) return;
+
             select(selectShape);
         });
 
-        circleBtn.addActionListener((e) -> create(new CircleCreator()));
-        lineSegmentBtn.addActionListener((e) -> create(new LineSegmentCreator()));
-        squareBtn.addActionListener((e) -> create(new SquareCreator()));
-        rectangleBtn.addActionListener((e) -> create(new RectangleCreator()));
-        triangleBtn.addActionListener((e) -> create(new TriangleCreator()));
 
-        deleteBtn.addActionListener((e) -> {
-            if(selectedShape == null) {
-                JOptionPane.showMessageDialog(frame, "No shape selected");
-                return;
-            }
-            canvasEngine.removeShape(selectedShape);
-        });
-
-        colorizeBtn.addActionListener((e) -> {
-            if(selectedShape == null) {
-                JOptionPane.showMessageDialog(frame, "No shape selected");
-                return;
-            }
-
-            chooseColor((AbstractShapeClass) selectedShape);
-        });
-
+        /*
+        * Canvas mouse Listeners
+        * */
         canvas.addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Integer shapeIndex = canvasEngine.getShapeIndexAtPoint(e.getPoint());
+                Point point = e.getPoint();
 
-                select(shapeIndex == null ? null : canvasEngine.getShapes()[shapeIndex]);
+                select(canvasEngine.getShapeAtPoint(point));
 
                 if(selectedShape != null) {
-                    selectedShape.setDraggingPoint(e.getPoint());
+                    selectedShape.setDraggingPoint(point);
                 }
             }
             public void mouseClicked(MouseEvent e) {}
@@ -127,14 +134,13 @@ public class Application {
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());
+                Point point = e.getPoint();
+                mousePosition.setText("Mouse: " + point.x + "x" + point.y);
 
                 if(selectedShape == null) return;
 
-                selectedShape.moveTo(e.getPoint());
-
-                selectedShape.setDraggingPoint(e.getPoint());
-
+                selectedShape.moveTo(point);
+                selectedShape.setDraggingPoint(point);
                 canvasEngine.refresh();
             }
             @Override
@@ -181,13 +187,32 @@ public class Application {
         });
     }
 
-    private void chooseColor(AbstractShapeClass shape) {
-        ColorPicker colorPicker = new ColorPicker(shape);
+    private void delete(ActionEvent event) {
+        if(selectedShape == null) {
+            noShapeMessage();
+            return;
+        }
+
+        canvasEngine.removeShape(selectedShape);
+    }
+
+    private void chooseColor(ActionEvent event) {
+        if(selectedShape == null) {
+            noShapeMessage();
+            return;
+        }
+
+        ColorPicker colorPicker = new ColorPicker(selectedShape);
         enable(false);
         colorPicker.getColors().whenComplete((Boolean shouldRender, Object o2) -> {
             enable(true);
 
             canvasEngine.refresh();
         });
+    }
+
+    private void noShapeMessage()
+    {
+        JOptionPane.showMessageDialog(frame, "No shapes selected");
     }
 }
