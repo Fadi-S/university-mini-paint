@@ -16,6 +16,11 @@ public abstract class AbstractShapeClass implements Shape, Movable {
 
     private Point draggingPoint;
 
+    public AbstractShapeClass(Point point)
+    {
+        setPosition(point);
+    }
+
     @Override
     public void setPosition(Point position) {
         this.point = position;

@@ -9,9 +9,9 @@ public class Circle extends AbstractShapeClass implements Shape {
     private final int radius;
 
     public Circle(Point point, int radius) {
-        this.radius = radius;
+        super(point);
 
-        setPosition(point);
+        this.radius = radius;
     }
 
     @Override

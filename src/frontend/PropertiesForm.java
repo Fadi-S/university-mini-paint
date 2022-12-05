@@ -77,7 +77,7 @@ public class PropertiesForm {
             try {
                 for(int i=0; i<props.length; i++) {
                     int val = Integer.parseInt(values[i]);
-                    if(val <= 0) {
+                    if(val < 0) {
                         throw new NumberFormatException();
                     }
 

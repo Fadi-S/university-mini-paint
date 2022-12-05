@@ -139,8 +139,8 @@ public class Application {
 
                 if(selectedShape == null) return;
 
-                selectedShape.moveTo(point);
-                selectedShape.setDraggingPoint(point);
+                selectedShape.moveTo(e.getPoint());
+                selectedShape.setDraggingPoint(e.getPoint());
                 canvasEngine.refresh();
             }
             @Override

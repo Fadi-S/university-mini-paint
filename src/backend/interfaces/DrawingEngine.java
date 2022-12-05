@@ -1,7 +1,5 @@
 package backend.interfaces;
 
-import backend.interfaces.Shape;
-
 public interface DrawingEngine {
     void addShape(Shape shape);
 

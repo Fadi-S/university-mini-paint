@@ -10,10 +10,9 @@ public class Rectangle extends AbstractShapeClass implements Shape {
     private final int height;
 
     public Rectangle(Point point, int width, int height) {
+        super(point);
         this.width = width;
         this.height = height;
-
-        setPosition(point);
     }
 
     @Override

@@ -3,13 +3,11 @@ package frontend;
 import backend.interfaces.DrawingEngine;
 import backend.interfaces.ShapesChangedListener;
 import backend.interfaces.Shape;
-import backend.shapes.AbstractShapeClass;
 
 import javax.swing.*;
 import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Canvas extends JPanel implements DrawingEngine {
     private Shape selectedShape;
@@ -51,10 +49,17 @@ public class Canvas extends JPanel implements DrawingEngine {
 
     public Shape getShapeAtPoint(Point point)
     {
-        return shapes.stream()
+        Shape[] selectedShapes = shapes.stream()
                 .filter((shape) -> shape.contains(point))
-                .min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
-                .orElse(null);
+//                .min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
+                .toArray(Shape[]::new);
+
+        if(selectedShapes.length == 0) {
+            return null;
+        }
+
+        return selectedShapes[selectedShapes.length-1];
+
     }
 
     public void setSelectedShape(Shape selectedShape) {

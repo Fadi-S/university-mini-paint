@@ -11,16 +11,16 @@ public class Triangle extends AbstractShapeClass {
     private final Point point3;
 
     public Triangle(Point point1, Point point2, Point point3) {
-        this.point1 = point1;
-        this.point2 = point2;
-        this.point3 = point3;
-
-        setPosition(
+        super(
                 new Point(
                         (point1.x+point2.x+point3.x) / 3,
                         (point1.y+point2.y+point3.y) / 3
                 )
         );
+
+        this.point1 = point1;
+        this.point2 = point2;
+        this.point3 = point3;
     }
 
     @Override
