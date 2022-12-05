@@ -127,6 +127,8 @@ public class Application {
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());
+
                 if(selectedShape == null) return;
 
                 selectedShape.moveTo(e.getPoint());
