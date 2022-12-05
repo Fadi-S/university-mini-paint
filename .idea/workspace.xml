@@ -6,22 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/Movable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/DefaultShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/AbstractShapeClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Triangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/CircleCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/CircleCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/DefaultShapeCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/DefaultShapeCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/LineSegmentCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/LineSegmentCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/RectangleCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/RectangleCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/ShapeCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/ShapeCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/SquareCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/SquareCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/TriangleCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/TriangleCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/ColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/ColorPicker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" afterDir="false" />
@@ -152,7 +136,7 @@
       <workItem from="1670090130627" duration="16737000" />
       <workItem from="1670178221249" duration="83000" />
       <workItem from="1670178319623" duration="73000" />
-      <workItem from="1670181690797" duration="17155000" />
+      <workItem from="1670181690797" duration="17633000" />
     </task>
     <servers />
   </component>

@@ -13,13 +13,15 @@ public class PropertiesForm {
     private JButton submitBtn;
     private JPanel formPanel;
     private JButton cancelBtn;
+    private JButton outlineColorBtn;
+    private JButton fillColorBtn;
 
     CompletableFuture<Boolean> response;
 
     public PropertiesForm(ShapeCreator shapeCreator) {
         frame = new JFrame("Properties of " + shapeCreator.getName());
         frame.setContentPane(panel);
-        frame.setSize(450, 350);
+        frame.setSize(450, 400);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         response = new CompletableFuture<>();
 
@@ -27,6 +29,27 @@ public class PropertiesForm {
         rootPane.setDefaultButton(submitBtn);
 
         String[] props = shapeCreator.properties();
+
+        outlineColorBtn.setUI(new ColorPicker.CustomButton());
+        outlineColorBtn.setBackground(Color.black);
+        outlineColorBtn.setForeground(Color.white);
+        outlineColorBtn.addActionListener((e) -> {
+            Color color = JColorChooser.showDialog(frame, "Choose shape outline color", Color.black);
+
+            outlineColorBtn.setBackground(color);
+
+            shapeCreator.setColor(color);
+        });
+
+        fillColorBtn.setUI(new ColorPicker.CustomButton());
+        fillColorBtn.setForeground(Color.black);
+        fillColorBtn.addActionListener((e) -> {
+            Color color = JColorChooser.showDialog(frame, "Choose shape fill color", null);
+
+            fillColorBtn.setBackground(color);
+
+            shapeCreator.setFillColor(color);
+        });
 
         GridLayout layout = new GridLayout(props.length, 2);
         layout.setHgap(10);

@@ -16,7 +16,7 @@ public class ColorPicker {
     private final JFrame frame;
     CompletableFuture<Boolean> response;
 
-    private static class CustomButton extends BasicButtonUI
+    public static class CustomButton extends BasicButtonUI
     {
         @Override
         protected void paintFocus(Graphics g, AbstractButton b, Rectangle viewRect, Rectangle textRect, Rectangle iconRect) {
