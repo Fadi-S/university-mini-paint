@@ -10,7 +10,7 @@ public class Square extends Rectangle implements Shape {
     }
 
     @Override
-    public String getKey() {
+    public String toString() {
         return "square-" + seed;
     }
 }

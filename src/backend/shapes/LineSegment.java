@@ -21,7 +21,7 @@ public class LineSegment extends AbstractShapeClass implements Shape {
     }
 
     @Override
-    public String getKey() {
+    public String toString() {
         return "line-" + seed;
     }
 

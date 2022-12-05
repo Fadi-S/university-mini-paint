@@ -60,7 +60,7 @@ public class Triangle extends AbstractShapeClass {
     }
 
     @Override
-    public String getKey() {
+    public String toString() {
         return "triangle-" + seed;
     }
 

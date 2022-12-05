@@ -42,7 +42,7 @@ public class Circle extends AbstractShapeClass implements Shape {
     }
 
     @Override
-    public String getKey() {
+    public String toString() {
         return "circle-" + seed;
     }
 

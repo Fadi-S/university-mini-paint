@@ -26,7 +26,7 @@ public class ColorPicker {
     }
 
     public ColorPicker(AbstractShapeClass shape) {
-        frame = new JFrame("Pick color for " + shape.getKey());
+        frame = new JFrame("Pick color for " + shape.toString());
         frame.setSize(300, 300);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

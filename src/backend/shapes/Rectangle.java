@@ -54,7 +54,7 @@ public class Rectangle extends AbstractShapeClass implements Shape {
     }
 
     @Override
-    public String getKey() {
+    public String toString() {
         return "rectangle-" + seed;
     }
 

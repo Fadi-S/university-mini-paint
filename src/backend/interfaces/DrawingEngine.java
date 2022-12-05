@@ -1,4 +1,4 @@
-package backend;
+package backend.interfaces;
 
 import backend.interfaces.Shape;
 

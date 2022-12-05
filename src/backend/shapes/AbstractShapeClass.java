@@ -84,14 +84,7 @@ public abstract class AbstractShapeClass implements Shape, Movable {
         setPosition(point);
     }
 
-    public String toString()
-    {
-        return getKey();
-    }
-
-    public String getKey() {
-        return "shape-" + seed;
-    }
+    abstract public String toString();
 
     public abstract double area();
 }

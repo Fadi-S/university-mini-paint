@@ -1,4 +1,4 @@
-package backend.events;
+package backend.interfaces;
 
 import backend.interfaces.Shape;
 

@@ -1,7 +1,7 @@
 package frontend;
 
 import backend.interfaces.Shape;
-import backend.events.ShapesChangedListener;
+import backend.interfaces.ShapesChangedListener;
 import backend.shapes.*;
 import backend.shapes.creator.*;
 
