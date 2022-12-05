@@ -21,7 +21,7 @@ public class PropertiesForm {
     public PropertiesForm(ShapeCreator shapeCreator) {
         frame = new JFrame("Properties of " + shapeCreator.getName());
         frame.setContentPane(panel);
-        frame.setSize(450, 400);
+//        frame.setMinimumSize(new Dimension(450, 400));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         response = new CompletableFuture<>();
 
@@ -52,7 +52,7 @@ public class PropertiesForm {
         });
 
         GridLayout layout = new GridLayout(props.length, 2);
-        layout.setHgap(10);
+        layout.setVgap(10);
         formPanel.setLayout(layout);
         JTextField[] customFields = new JTextField[props.length];
         for (int i=0; i<props.length; i++) {
@@ -97,6 +97,8 @@ public class PropertiesForm {
 
             frame.dispose();
         });
+
+        frame.pack();
     }
 
     public CompletableFuture<Boolean> getData() {
