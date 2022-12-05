@@ -1,6 +1,5 @@
 package frontend;
 
-import backend.shapes.DefaultShape;
 import backend.shapes.creator.ShapeCreator;
 
 import javax.swing.*;
@@ -11,18 +10,16 @@ import java.util.concurrent.CompletableFuture;
 public class PropertiesForm {
     private final JFrame frame;
     private JPanel panel;
-    private JTextField yTextField;
-    private JTextField xTextField;
     private JButton submitBtn;
     private JPanel formPanel;
     private JButton cancelBtn;
 
     CompletableFuture<Boolean> response;
 
-    public PropertiesForm(ShapeCreator shapeCreator, JPanel canvas) {
+    public PropertiesForm(ShapeCreator shapeCreator) {
         frame = new JFrame("Properties of " + shapeCreator.getName());
         frame.setContentPane(panel);
-        frame.setSize(400, 350);
+        frame.setSize(450, 350);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         response = new CompletableFuture<>();
 
@@ -31,47 +28,30 @@ public class PropertiesForm {
 
         String[] props = shapeCreator.properties();
 
-        GridLayout layout = new GridLayout(props.length*2, 1);
+        GridLayout layout = new GridLayout(props.length, 2);
+        layout.setHgap(10);
         formPanel.setLayout(layout);
         JTextField[] customFields = new JTextField[props.length];
         for (int i=0; i<props.length; i++) {
             customFields[i] = new JTextField();
             JLabel label = new JLabel(props[i].substring(0, 1).toUpperCase() + props[i].substring(1));
             label.setLabelFor(customFields[i]);
-            formPanel.add(label, 2*i);
-            formPanel.add(customFields[i], 2*i+1);
+            formPanel.add(label);
+            formPanel.add(customFields[i]);
         }
 
         submitBtn.addActionListener((event) -> {
-            String xStr = xTextField.getText();
-            String yStr = yTextField.getText();
 
-            String[] values = new String[customFields.length];
-            for(int i=0; i<customFields.length; i++) {
-                values[i] = customFields[i].getText();
-            }
+            String[] values = Arrays.stream(customFields)
+                    .map(JTextField::getText)
+                    .toArray(String[]::new);
 
-            if(xStr.isBlank() || yStr.isBlank() || Arrays.stream(values).anyMatch(String::isBlank)) {
+            if(Arrays.stream(values).anyMatch(String::isBlank)) {
                 JOptionPane.showMessageDialog(frame, "Some fields are empty");
-
                 return;
             }
 
             try {
-                int x = Integer.parseInt(xStr);
-                int y = Integer.parseInt(yStr);
-                Dimension canvasSize = canvas.getSize();
-                if(x > canvasSize.width || y > canvasSize.height) {
-                    JOptionPane.showMessageDialog(frame, "X and Y coordinates must not be greater than " + canvasSize.width + " and " + canvasSize.height + " respectively");
-                    return;
-                }
-
-                if(x < 0 || y < 0) {
-                    throw new NumberFormatException();
-                }
-
-                shapeCreator.setPosition(new Point(x, y));
-
                 for(int i=0; i<props.length; i++) {
                     int val = Integer.parseInt(values[i]);
                     if(val <= 0) {
@@ -100,9 +80,5 @@ public class PropertiesForm {
         frame.setVisible(true);
 
         return response;
-    }
-
-    public JFrame getFrame() {
-        return frame;
     }
 }

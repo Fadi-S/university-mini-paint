@@ -5,7 +5,7 @@ import backend.utils.Distance;
 
 import java.awt.*;
 
-public class LineSegment extends DefaultShape implements Shape {
+public class LineSegment extends AbstractShapeClass implements Shape {
 
     private final Point point1;
     private final Point point2;

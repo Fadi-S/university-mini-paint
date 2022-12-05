@@ -22,10 +22,6 @@ public abstract class DefaultShapeCreator implements ShapeCreator {
         this.properties.put(property, value);
     }
 
-    public void setPosition(Point position) {
-        this.point = position;
-    }
-
     public void setFillColor(Color color) {
         this.fillColor = color;
     }

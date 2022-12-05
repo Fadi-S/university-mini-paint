@@ -1,7 +1,7 @@
 package backend;
 
 import backend.events.ShapesChangedListener;
-import backend.shapes.DefaultShape;
+import backend.shapes.AbstractShapeClass;
 import backend.interfaces.Shape;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ abstract public class Engine extends JPanel implements DrawingEngine {
     {
         Shape selectedShape = shapes.stream()
                 .filter((shape) -> shape.contains(point))
-                .min(Comparator.comparing((shape) -> ((DefaultShape) shape).area()))
+                .min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
                 .orElse(null);
 
         if(selectedShape == null) return null;

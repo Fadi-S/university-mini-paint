@@ -5,7 +5,7 @@ import backend.utils.Distance;
 
 import java.awt.*;
 
-public class Circle extends DefaultShape implements Shape {
+public class Circle extends AbstractShapeClass implements Shape {
     private final int radius;
 
     public Circle(Point point, int radius) {

@@ -3,7 +3,6 @@ package frontend;
 import backend.interfaces.Shape;
 import backend.events.ShapesChangedListener;
 import backend.shapes.*;
-import backend.shapes.Rectangle;
 import backend.shapes.creator.*;
 
 import javax.swing.*;
@@ -105,7 +104,7 @@ public class Application {
                 return;
             }
 
-            chooseColor((DefaultShape) selectedShape);
+            chooseColor((AbstractShapeClass) selectedShape);
         });
 
         canvas.addMouseListener(new MouseListener() {
@@ -145,20 +144,17 @@ public class Application {
 
     private void select(Shape shape) {
         canvasEngine.setSelectedShape(shape);
+        selectedShape = shape;
 
         if(shape == null) {
-            selectedShape = null;
             selectedShapeLabel.setText("No shape selected");
             shapesSelectBox.setSelectedItem(null);
-            canvasEngine.refresh();
-            return;
+        } else {
+            selectedShapeLabel.setText("Shape: " + selectedShape);
+
+            if (!shape.toString().equals(shapesSelectBox.getSelectedItem()))
+                shapesSelectBox.setSelectedItem(shape.toString());
         }
-
-        selectedShape = shape;
-        selectedShapeLabel.setText("Shape: " + selectedShape);
-
-        if(!shape.toString().equals(shapesSelectBox.getSelectedItem()))
-            shapesSelectBox.setSelectedItem(shape.toString());
 
         canvasEngine.refresh();
     }
@@ -166,20 +162,14 @@ public class Application {
     private void enable(boolean value) {
         Arrays.stream(controlsPanel.getComponents()).forEach(i -> i.setEnabled(value));
         Arrays.stream(shapesButtonsPanel.getComponents()).forEach(i -> i.setEnabled(value));
+//        frame.setVisible(value);
     }
 
-    private JFrame shapePropertiesForm = null;
-
     private void create(ShapeCreator shapeCreator) {
-        if(shapePropertiesForm != null) {
-            shapePropertiesForm.requestFocus();
-            return;
-        }
-
-        PropertiesForm form = new PropertiesForm(shapeCreator, canvas);
-        shapePropertiesForm = form.getFrame();
+        PropertiesForm form = new PropertiesForm(shapeCreator);
+        enable(false);
         form.getData().whenComplete((Boolean shouldRender, Object o2) -> {
-            shapePropertiesForm = null;
+            enable(true);
 
             if(!shouldRender) return;
 
@@ -189,12 +179,7 @@ public class Application {
         });
     }
 
-    private void chooseColor(DefaultShape shape) {
-        if(shapePropertiesForm != null) {
-            shapePropertiesForm.requestFocus();
-            return;
-        }
-
+    private void chooseColor(AbstractShapeClass shape) {
         ColorPicker colorPicker = new ColorPicker(shape);
         enable(false);
         colorPicker.getColors().whenComplete((Boolean shouldRender, Object o2) -> {

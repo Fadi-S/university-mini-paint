@@ -4,7 +4,7 @@ import backend.utils.Distance;
 
 import java.awt.*;
 
-public class Triangle extends DefaultShape {
+public class Triangle extends AbstractShapeClass {
 
     private final Point point1;
     private final Point point2;
@@ -41,21 +41,20 @@ public class Triangle extends DefaultShape {
         );
     }
 
-    private double sign(Point p1, Point p2, Point p3) {
-        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+    private boolean checkPositive(Point p1, Point p2, Point p3) {
+        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y) > 0;
     }
 
     @Override
     public boolean contains(Point point) {
-        double d1, d2, d3;
-        boolean hasNegative, hasPositive;
+        boolean isOne, isTwo, isThree;
 
-        d1 = sign(point, point1, point2);
-        d2 = sign(point, point2, point3);
-        d3 = sign(point, point3, point1);
+        isOne = checkPositive(point, point1, point2);
+        isTwo = checkPositive(point, point2, point3);
+        isThree = checkPositive(point, point3, point1);
 
-        hasNegative = (d1 < 0) || (d2 < 0) || (d3 < 0);
-        hasPositive = (d1 > 0) || (d2 > 0) || (d3 > 0);
+        boolean hasNegative = !isOne || !isTwo || !isThree;
+        boolean hasPositive = isOne || isTwo || isThree;
 
         return !(hasNegative && hasPositive);
     }

@@ -12,5 +12,4 @@ public interface ShapeCreator {
     String getName();
     void setColor(Color color);
     void setFillColor(Color color);
-    void setPosition(Point point);
 }

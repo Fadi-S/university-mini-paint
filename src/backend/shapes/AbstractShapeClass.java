@@ -5,7 +5,7 @@ import backend.interfaces.Shape;
 
 import java.awt.*;
 
-public abstract class DefaultShape implements Shape, Movable {
+public abstract class AbstractShapeClass implements Shape, Movable {
 
     private static int key = 1;
     protected final String seed = String.format("%02d", (key++));
@@ -90,7 +90,7 @@ public abstract class DefaultShape implements Shape, Movable {
     }
 
     public String getKey() {
-        return "shape-" + key;
+        return "shape-" + seed;
     }
 
     public abstract double area();

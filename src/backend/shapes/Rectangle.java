@@ -4,7 +4,7 @@ import backend.interfaces.Shape;
 
 import java.awt.*;
 
-public class Rectangle extends DefaultShape implements Shape {
+public class Rectangle extends AbstractShapeClass implements Shape {
 
     private final int width;
     private final int height;

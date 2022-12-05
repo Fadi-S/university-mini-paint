@@ -3,7 +3,6 @@ package backend.interfaces;
 import java.awt.*;
 
 public interface Movable {
-
     void setDraggingPoint(Point point);
     Point getDraggingPoint();
 
