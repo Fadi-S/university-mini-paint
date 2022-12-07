@@ -1,6 +1,6 @@
 package backend.shapes;
 
-import backend.utils.Distance;
+import backend.interfaces.Shape;
 
 import java.awt.*;
 
@@ -66,9 +66,9 @@ public class Triangle extends AbstractShapeClass {
 
     @Override
     public double area() {
-        double a = Distance.between(point1, point2);
-        double b = Distance.between(point1, point3);
-        double c = Distance.between(point2, point3);
+        double a = point1.distance(point2);
+        double b = point1.distance(point3);
+        double c = point2.distance(point3);
 
         double s = (a+b+c) / 2; // semi perimeter
 
@@ -100,5 +100,17 @@ public class Triangle extends AbstractShapeClass {
                         (point1.y+point2.y+point3.y) / 3
                 )
         );
+    }
+
+    @Override
+    public Shape clone() {
+        return new Triangle(point1, point2, point3);
+    }
+
+    @Override
+    public Point[] points() {
+        return new Point[] {
+                point1, point2, point3
+        };
     }
 }

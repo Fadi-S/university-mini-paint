@@ -87,5 +87,10 @@ public class Canvas extends JPanel implements DrawingEngine {
         graphics.setColor(Color.black);
         graphics.drawLine(center.x, center.y-2, center.x, center.y+2);
         graphics.drawLine(center.x-2, center.y, center.x+2, center.y);
+
+        Point[] points = selectedShape.points();
+        for (Point point : points) {
+            graphics.fillRect(point.x, point.y, 5, 5);
+        }
     }
 }

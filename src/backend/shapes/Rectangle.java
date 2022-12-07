@@ -41,6 +41,26 @@ public class Rectangle extends AbstractShapeClass implements Shape {
     }
 
     @Override
+    public Shape clone() {
+        return new Rectangle(getPosition(), width, height);
+    }
+
+    @Override
+    public Point[] points() {
+        Point center = getPosition();
+
+        int x = width/2;
+        int y = height/2;
+
+        return new Point[] {
+                new Point(center.x - x, center.y - y), // Top Left
+                new Point(center.x - x, center.y + y), // Bottom Left
+                new Point(center.x + x, center.y - y), // Top Right
+                new Point(center.x + x, center.y + y), // Bottom Right
+        };
+    }
+
+    @Override
     protected void drawOutline(Graphics canvas) {
         Point center = getPosition();
         canvas.drawRect(center.x - (width / 2), center.y - (height / 2), width, height);

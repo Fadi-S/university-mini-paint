@@ -1,7 +1,6 @@
 package backend.shapes;
 
 import backend.interfaces.Shape;
-import backend.utils.Distance;
 
 import java.awt.*;
 
@@ -36,14 +35,14 @@ public class LineSegment extends AbstractShapeClass implements Shape {
 
     @Override
     public boolean contains(Point point) {
-        double lineLength = Distance.between(point1, point2);
-        double lengthFromPoint = Distance.between(point, point1) + Distance.between(point, point2);
+        double lineLength = point1.distance(point2);
+        double lengthFromPoint = point.distance(point1) + point.distance(point2);
 
         return Math.abs(lengthFromPoint - lineLength) <= 2;
     }
 
     public double area() {
-        return Distance.between(point1, point2);
+        return point1.distance(point2);
     }
 
     public void moveTo(Point point) {
@@ -68,9 +67,16 @@ public class LineSegment extends AbstractShapeClass implements Shape {
         ));
     }
 
-    public String[] properties() {
-        return new String[]{
-                "x2", "y2"
+    @Override
+    public Shape clone() {
+        return new LineSegment(point1, point2);
+    }
+
+    @Override
+    public Point[] points() {
+        return new Point[] {
+                point1,
+                point2,
         };
     }
 }

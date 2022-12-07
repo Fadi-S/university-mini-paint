@@ -2,6 +2,7 @@ package frontend;
 
 import backend.interfaces.Shape;
 import backend.interfaces.ShapesChangedListener;
+import backend.shapes.AbstractShapeClass;
 import backend.shapes.creator.*;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class Application {
     private final JFrame frame = new JFrame("Vector Drawing Application");
     private JPanel panel;
-    private JButton circleBtn;
+    private JButton ovalBtn;
     private JButton lineSegmentBtn;
     private JButton squareBtn;
     private JButton rectangleBtn;
@@ -26,6 +27,7 @@ public class Application {
     private JPanel controlsPanel;
     private JPanel shapesButtonsPanel;
     private JButton triangleBtn;
+    private JButton copyBtn;
 
     private final Canvas canvasEngine = new Canvas();
 
@@ -51,7 +53,7 @@ public class Application {
 
         setupEvents();
 
-        circleBtn.addActionListener((e) -> create(new CircleCreator()));
+        ovalBtn.addActionListener((e) -> create(new OvalCreator()));
         lineSegmentBtn.addActionListener((e) -> create(new LineSegmentCreator()));
         squareBtn.addActionListener((e) -> create(new SquareCreator()));
         rectangleBtn.addActionListener((e) -> create(new RectangleCreator()));
@@ -59,6 +61,7 @@ public class Application {
 
         deleteBtn.addActionListener(this::delete);
         colorizeBtn.addActionListener(this::chooseColor);
+        copyBtn.addActionListener(this::copy);
     }
 
     private void setupEvents() {
@@ -117,12 +120,10 @@ public class Application {
         canvas.addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Point point = e.getPoint();
-
-                select(canvasEngine.getShapeAtPoint(point));
+                select(canvasEngine.getShapeAtPoint(e.getPoint()));
 
                 if(selectedShape != null) {
-                    selectedShape.setDraggingPoint(point);
+                    selectedShape.setDraggingPoint(e.getPoint());
                 }
             }
             public void mouseClicked(MouseEvent e) {}
@@ -211,8 +212,20 @@ public class Application {
         });
     }
 
+    private void copy(ActionEvent e) {
+        if(selectedShape == null) {
+            noShapeMessage();
+            return;
+        }
+
+        Shape clonedShape = ((AbstractShapeClass) selectedShape).clone();
+
+        canvasEngine.addShape(clonedShape);
+    }
+
     private void noShapeMessage()
     {
         JOptionPane.showMessageDialog(frame, "No shapes selected");
     }
+
 }

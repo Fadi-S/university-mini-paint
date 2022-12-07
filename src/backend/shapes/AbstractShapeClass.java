@@ -1,11 +1,10 @@
 package backend.shapes;
 
-import backend.interfaces.Movable;
 import backend.interfaces.Shape;
 
 import java.awt.*;
 
-public abstract class AbstractShapeClass implements Shape, Movable {
+public abstract class AbstractShapeClass implements Shape {
 
     private static int key = 1;
     protected final String seed = String.format("%02d", (key++));
@@ -88,6 +87,10 @@ public abstract class AbstractShapeClass implements Shape, Movable {
 
         setPosition(point);
     }
+
+    abstract public Shape clone();
+
+    abstract public Point[] points();
 
     abstract public String toString();
 
