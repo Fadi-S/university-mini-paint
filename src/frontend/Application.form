@@ -115,12 +115,12 @@
           </component>
         </children>
       </grid>
-      <component id="13f04" class="javax.swing.JLabel" binding="selectedShapeLabel">
+      <component id="13f04" class="javax.swing.JLabel" binding="savedLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="No Shape Selected"/>
+          <text value="."/>
         </properties>
       </component>
       <component id="5d7d" class="javax.swing.JLabel" binding="sizeLabel">

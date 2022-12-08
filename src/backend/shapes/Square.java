@@ -1,13 +1,12 @@
 package backend.shapes;
 
-import backend.interfaces.Shape;
-
 import java.awt.*;
 
-public class Square extends Rectangle implements Shape {
+public class Square extends Rectangle {
     public Square(Point point, int side) {
         super(point, side, side);
     }
+    public Square() {super();}
 
     @Override
     public String toString() {

@@ -3,11 +3,15 @@ package frontend;
 import backend.interfaces.DrawingEngine;
 import backend.interfaces.ShapesChangedListener;
 import backend.interfaces.Shape;
+import backend.shapes.AbstractShapeClass;
+import org.json.simple.JsonArray;
+import org.json.simple.JsonObject;
 
 import javax.swing.*;
 import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Canvas extends JPanel implements DrawingEngine {
     private Shape selectedShape;
@@ -22,6 +26,38 @@ public class Canvas extends JPanel implements DrawingEngine {
 
     public void addListener(ShapesChangedListener toAdd) {
         listeners.add(toAdd);
+    }
+
+    public String toJSON() {
+        JsonObject json = new JsonObject();
+
+        JsonArray shapesJSON = new JsonArray();
+
+        shapes.forEach((shape) -> shapesJSON.add(shape.toJSON()));
+
+        json.put("shapes", shapesJSON);
+
+        return json.toJson();
+    }
+
+    public void fromJSON(JsonObject json) {
+        removeAll();
+        Collection<JsonObject> shapesJson = json.getCollection("shapes");
+
+        for (JsonObject shapeJson : shapesJson) {
+            Shape shape = AbstractShapeClass.fromString(shapeJson);
+
+            if(shape != null)
+                this.addShape(shape);
+        }
+    }
+
+    public void removeAll() {
+        shapes.clear();
+
+        refresh();
+
+        listeners.forEach(ShapesChangedListener::shapesCleared);
     }
 
     @Override
@@ -90,7 +126,7 @@ public class Canvas extends JPanel implements DrawingEngine {
 
         Point[] points = selectedShape.points();
         for (Point point : points) {
-            graphics.fillRect(point.x, point.y, 5, 5);
+            graphics.fillRect(point.x-4, point.y-4, 8, 8);
         }
     }
 }

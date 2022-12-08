@@ -4,11 +4,19 @@ import backend.interfaces.Shape;
 import backend.interfaces.ShapesChangedListener;
 import backend.shapes.AbstractShapeClass;
 import backend.shapes.creator.*;
+import org.json.simple.JsonObject;
+import org.json.simple.Jsoner;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Application {
     private final JFrame frame = new JFrame("Vector Drawing Application");
@@ -20,7 +28,7 @@ public class Application {
     private JButton colorizeBtn;
     private JPanel canvas;
     private JButton deleteBtn;
-    private JLabel selectedShapeLabel;
+    private JLabel savedLabel;
     private JComboBox<String> shapesSelectBox;
     private JLabel sizeLabel;
     private JLabel mousePosition;
@@ -32,6 +40,9 @@ public class Application {
     private final Canvas canvasEngine = new Canvas();
 
     Shape selectedShape;
+    Point resizingBy = null;
+
+    private File selectedFile = null;
 
     public static void main(String[] args) {
         new Application();
@@ -47,8 +58,42 @@ public class Application {
         sizeLabel.setText(canvas.getWidth() + "x" + canvas.getHeight());
     }
 
+    private void setupMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+
+        JMenuItem saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
+        saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+        saveMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Save shapes to JSON file");
+        saveMenuItem.addActionListener((e) -> save(false));
+
+        JMenuItem saveAsMenuItem = new JMenuItem("Save As...", KeyEvent.VK_A);
+        saveAsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+        saveAsMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Save shapes to new JSON file");
+        saveAsMenuItem.addActionListener((e) -> save(true));
+
+
+        JMenuItem loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L);
+        loadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+        loadMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Load shapes from JSON file");
+        loadMenuItem.addActionListener(this::load);
+
+
+        menu.add(saveMenuItem);
+        menu.add(saveAsMenuItem);
+        menu.add(loadMenuItem);
+
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
+    }
+
     Application()
     {
+        setupMenu();
+
         setupFrame();
 
         setupEvents();
@@ -78,6 +123,13 @@ public class Application {
             public void shapeRemoved(Shape shape) {
                 shapesSelectBox.removeItem(shape.toString());
                 select(null);
+            }
+
+            @Override
+            public void shapesCleared() {
+                shapesSelectBox.removeAllItems();
+                select(null);
+                AbstractShapeClass.resetNumbering();
             }
         });
 
@@ -120,6 +172,9 @@ public class Application {
         canvas.addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
+                resizingBy = getCornerPoint(e.getPoint());
+                if(resizingBy != null) return;
+
                 select(canvasEngine.getShapeAtPoint(e.getPoint()));
 
                 if(selectedShape != null) {
@@ -127,7 +182,9 @@ public class Application {
                 }
             }
             public void mouseClicked(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+                resizingBy = null;
+            }
             public void mouseEntered(MouseEvent e) {}
             public void mouseExited(MouseEvent e) {}
         });
@@ -135,10 +192,22 @@ public class Application {
         canvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Point point = e.getPoint();
-                mousePosition.setText("Mouse: " + point.x + "x" + point.y);
+                mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());
 
                 if(selectedShape == null) return;
+
+                Point mousePoint = e.getPoint();
+
+                if(resizingBy == null)
+                    resizingBy = getCornerPoint(mousePoint);
+
+                if(resizingBy != null) {
+                    resizingBy = selectedShape.resize(resizingBy, mousePoint);
+
+                    canvasEngine.refresh();
+
+                    return;
+                }
 
                 selectedShape.moveTo(e.getPoint());
                 selectedShape.setDraggingPoint(e.getPoint());
@@ -147,8 +216,119 @@ public class Application {
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition.setText("Mouse: " + e.getX() + "x" + e.getY());
+
+                Point mousePoint = e.getPoint();
+
+                Point p = getCornerPoint(mousePoint);
+                Cursor cursor = new Cursor(p != null ? Cursor.CROSSHAIR_CURSOR : Cursor.DEFAULT_CURSOR);
+                frame.setCursor(cursor);
             }
         });
+    }
+
+    private Point getCornerPoint(Point mousePoint) {
+        if(selectedShape == null) return null;
+
+        for (Point point : selectedShape.points()) {
+            if(point.distance(mousePoint) < 10) {
+                return point;
+            }
+        }
+
+        return null;
+    }
+
+    private File getFile(boolean open) {
+        JFileChooser fileChooser = new JFileChooser();
+
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                String[] fileSections = f.getName().split("\\.");
+
+                return fileSections[fileSections.length-1].equalsIgnoreCase("json") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return "JSON files";
+            }
+        });
+
+        fileChooser.setMultiSelectionEnabled(false);
+
+        int result = open ? fileChooser.showOpenDialog(frame) : fileChooser.showSaveDialog(frame);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        }
+
+        return null;
+    }
+
+    private void save(boolean forceChooser) {
+        if(!forceChooser && selectedFile != null) {
+            save(selectedFile);
+            return;
+        }
+
+        File file = getFile(false);
+        if(file != null) {
+            selectedFile = file;
+            save(selectedFile);
+        }
+    }
+
+    private void save(File file) {
+        try {
+            FileWriter writer = new FileWriter(file);
+
+            writer.write(canvasEngine.toJSON());
+
+            writer.close();
+
+            savedLabel.setText("Saved");
+            new Thread(() -> {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                savedLabel.setText(".");
+            }).start();
+        } catch (IOException ignored) {
+            System.err.println("Error saving file");
+        }
+    }
+
+    private void load(ActionEvent e) {
+        File file = getFile(true);
+        if(file == null)
+            return;
+
+        String[] fileSections = file.getName().split("\\.");
+
+        if(! fileSections[fileSections.length-1].equalsIgnoreCase("json")) {
+            JOptionPane.showMessageDialog(frame, "Invalid file type!");
+            return;
+        }
+
+        try {
+            Scanner scanner = new Scanner(file);
+
+            StringBuilder json = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                json.append(scanner.nextLine());
+            }
+
+            canvasEngine.fromJSON(Jsoner.deserialize(json.toString(), new JsonObject()));
+
+            selectedFile = file;
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(frame, "Could not open file");
+        }
     }
 
     private void select(Shape shape) {
@@ -156,11 +336,8 @@ public class Application {
         selectedShape = shape;
 
         if(shape == null) {
-            selectedShapeLabel.setText("No shape selected");
             shapesSelectBox.setSelectedItem(null);
         } else {
-            selectedShapeLabel.setText("Shape: " + selectedShape);
-
             if (!shape.toString().equals(shapesSelectBox.getSelectedItem()))
                 shapesSelectBox.setSelectedItem(shape.toString());
         }

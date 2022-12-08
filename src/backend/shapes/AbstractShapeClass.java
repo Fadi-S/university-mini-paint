@@ -1,13 +1,17 @@
 package backend.shapes;
 
 import backend.interfaces.Shape;
+import org.json.simple.JsonObject;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.math.BigDecimal;
+import java.util.Map;
 
 public abstract class AbstractShapeClass implements Shape {
 
     private static int key = 1;
-    protected final String seed = String.format("%02d", (key++));
+    protected String seed = String.format("%02d", (key++));
 
     private Color color;
     private Color fillColor;
@@ -52,13 +56,13 @@ public abstract class AbstractShapeClass implements Shape {
 
     @Override
     public void draw(Graphics canvas) {
-        canvas.setColor(getColor());
-        drawOutline(canvas);
-
         if(getFillColor() != null) {
             canvas.setColor(getFillColor());
             drawFill(canvas);
         }
+
+        canvas.setColor(getColor());
+        drawOutline(canvas);
     }
 
     protected abstract void drawOutline(Graphics canvas);
@@ -88,7 +92,85 @@ public abstract class AbstractShapeClass implements Shape {
         setPosition(point);
     }
 
-    abstract public Shape clone();
+    public static void resetNumbering() {
+        key = 1;
+    }
+
+    public static Shape fromString(JsonObject shapeJson) {
+        String type = shapeJson.getString("type");
+
+        try {
+            Class shapeClass = Class.forName(type);
+
+            Constructor<Shape> constructor = shapeClass.getConstructor();
+
+            Shape shape = constructor.newInstance();
+
+            shape.fromJSON(shapeJson);
+
+            return shape;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public JsonObject toJSON() {
+        JsonObject json = new JsonObject();
+
+        json.put("type", this.getClass().getName());
+
+        JsonObject color = null;
+        if (this.color != null){
+            color = new JsonObject();
+            color.put("r", this.color.getRed());
+            color.put("g", this.color.getGreen());
+            color.put("b", this.color.getBlue());
+        }
+        json.put("color", color);
+
+        JsonObject fillColor = null;
+        if (this.fillColor != null){
+            fillColor = new JsonObject();
+            fillColor.put("r", this.fillColor.getRed());
+            fillColor.put("g", this.fillColor.getGreen());
+            fillColor.put("b", this.fillColor.getBlue());
+        }
+        json.put("fillColor", fillColor);
+
+        return json;
+    }
+
+    public void fromJSON(JsonObject json) {
+        Map<String, BigDecimal> color = json.getMap("color");
+
+        if(color != null)
+            setColor(new Color(
+                    color.get("r").intValue(),
+                    color.get("g").intValue(),
+                    color.get("b").intValue()
+            ));
+
+        Map<String, BigDecimal> fillColor = json.getMap("fillColor");
+
+        if(fillColor != null)
+            setFillColor(new Color(
+                    fillColor.get("r").intValue(),
+                    fillColor.get("g").intValue(),
+                    fillColor.get("b").intValue()
+            ));
+    }
+
+    public Shape clone() {
+        try {
+            AbstractShapeClass clonedShape = (AbstractShapeClass) super.clone();
+            clonedShape.seed = String.format("%02d", key++);
+
+            return clonedShape;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 
     abstract public Point[] points();
 

@@ -1,10 +1,10 @@
 package backend.shapes;
 
-import backend.interfaces.Shape;
+import org.json.simple.JsonObject;
 
 import java.awt.*;
 
-public class LineSegment extends AbstractShapeClass implements Shape {
+public class LineSegment extends AbstractShapeClass {
 
     private final Point point1;
     private final Point point2;
@@ -16,6 +16,13 @@ public class LineSegment extends AbstractShapeClass implements Shape {
         ));
         this.point1 = point1;
         this.point2 = point2;
+    }
+
+    public LineSegment() {
+        super(new Point());
+
+        point1 = new Point();
+        point2 = new Point();
     }
 
     @Override
@@ -68,15 +75,64 @@ public class LineSegment extends AbstractShapeClass implements Shape {
     }
 
     @Override
-    public Shape clone() {
-        return new LineSegment(point1, point2);
-    }
-
-    @Override
     public Point[] points() {
         return new Point[] {
                 point1,
                 point2,
         };
+    }
+
+    @Override
+    public Point resize(Point corner, Point to) {
+        Point p = null;
+
+        if(corner.equals(point1)) {
+            point1.x = to.x;
+            point1.y = to.y;
+            p = point1;
+        }
+
+        if(corner.equals(point2)) {
+            point2.x = to.x;
+            point2.y = to.y;
+            p = point2;
+        }
+
+        setPosition(
+                new Point(
+                        (point1.x+point2.x) / 2,
+                        (point1.y+point2.y) / 2
+                )
+        );
+
+        return p;
+    }
+
+    @Override
+    public JsonObject toJSON() {
+        JsonObject json = super.toJSON();
+
+        json.put("point1.x", point1.x);
+        json.put("point1.y", point1.y);
+
+        json.put("point2.x", point2.x);
+        json.put("point2.y", point2.y);
+
+        return json;
+    }
+
+    @Override
+    public void fromJSON(JsonObject json) {
+        super.fromJSON(json);
+
+        point1.x = json.getInteger("point1.x");
+        point1.y = json.getInteger("point1.y");
+        point2.x = json.getInteger("point2.x");
+        point2.y = json.getInteger("point2.y");
+
+        setPosition(new Point(
+                (point1.x + point2.x) / 2,
+                (point1.y + point2.y) / 2
+        ));
     }
 }

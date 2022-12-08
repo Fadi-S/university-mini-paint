@@ -1,18 +1,22 @@
 package backend.shapes;
 
-import backend.interfaces.Shape;
+import org.json.simple.JsonObject;
 
 import java.awt.*;
 
-public class Oval extends AbstractShapeClass implements Shape {
-    private final int width;
-    private final int height;
+public class Oval extends AbstractShapeClass {
+    private int width;
+    private int height;
 
     public Oval(Point point, int width, int height) {
         super(point);
 
         this.width = width;
         this.height = height;
+    }
+
+    public Oval() {
+        super(new Point());
     }
 
     @Override
@@ -23,10 +27,6 @@ public class Oval extends AbstractShapeClass implements Shape {
                 && Math.abs(point.y - center.y) < (height / 2);
     }
 
-    @Override
-    public Shape clone() {
-        return new Oval(getPosition(), width, height);
-    }
 
     @Override
     public Point[] points() {
@@ -41,6 +41,44 @@ public class Oval extends AbstractShapeClass implements Shape {
                 new Point(center.x + x, center.y - y), // Top Right
                 new Point(center.x + x, center.y + y), // Bottom Right
         };
+    }
+
+    @Override
+    public Point resize(Point corner, Point to) {
+        Point[] points = points();
+
+        int x = 0;
+        int y = 0;
+
+        int index = 0;
+
+        if(corner.equals(points[0])) {
+            x = corner.x - to.x;
+            y = corner.y - to.y;
+        }
+
+        if(corner.equals(points[1])) {
+            x = corner.x - to.x;
+            y = to.y - corner.y;
+            index = 1;
+        }
+
+        if(corner.equals(points[2])) {
+            x = to.x - corner.x;
+            y = corner.y - to.y;
+            index = 2;
+        }
+
+        if(corner.equals(points[3])) {
+            x = to.x - corner.x;
+            y = to.y - corner.y;
+            index = 3;
+        }
+
+        width += x;
+        height += y;
+
+        return points()[index];
     }
 
     @Override
@@ -70,5 +108,31 @@ public class Oval extends AbstractShapeClass implements Shape {
 
     public double area() {
         return Math.PI * (width / 2.) * (height / 2.);
+    }
+
+    @Override
+    public JsonObject toJSON() {
+        JsonObject json = super.toJSON();
+
+        json.put("point.x", getPosition().x);
+        json.put("point.y", getPosition().y);
+
+        json.put("width", width);
+        json.put("height", height);
+
+        return json;
+    }
+
+    @Override
+    public void fromJSON(JsonObject json) {
+        super.fromJSON(json);
+
+        setPosition(new Point(
+                json.getInteger("point.x"),
+                json.getInteger("point.y")
+        ));
+
+        this.width = json.getInteger("width");
+        this.height = json.getInteger("height");
     }
 }

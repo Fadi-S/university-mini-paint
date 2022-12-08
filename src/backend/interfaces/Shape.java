@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-public interface Shape extends Movable, Resizable {
+public interface Shape extends Movable, Resizable, Savable, Cloneable {
     void setPosition(Point position);
     Point getPosition();
 
