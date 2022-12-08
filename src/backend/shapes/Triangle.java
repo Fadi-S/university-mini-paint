@@ -1,14 +1,15 @@
 package backend.shapes;
 
+import backend.interfaces.Shape;
 import org.json.simple.JsonObject;
 
 import java.awt.*;
 
 public class Triangle extends AbstractShapeClass {
 
-    private final Point point1;
-    private final Point point2;
-    private final Point point3;
+    private Point point1;
+    private Point point2;
+    private Point point3;
 
     public Triangle(Point point1, Point point2, Point point3) {
         super(

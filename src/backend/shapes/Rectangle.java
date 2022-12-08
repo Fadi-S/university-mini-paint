@@ -91,8 +91,8 @@ public class Rectangle extends AbstractShapeClass {
             index = 3;
         }
 
-        width += x;
-        height += y;
+        width = Math.abs(width + x);
+        height = Math.abs(height + y);
 
         return points()[index];
     }

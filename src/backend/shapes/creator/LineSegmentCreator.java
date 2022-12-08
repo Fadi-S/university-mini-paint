@@ -7,6 +7,10 @@ import java.awt.*;
 
 public class LineSegmentCreator extends DefaultShapeCreator {
 
+    public LineSegmentCreator() {
+        set("outlineOnly", 1);
+    }
+
     @Override
     public String[] properties() {
         return new String[] { "x1", "y1", "x2", "y2" };

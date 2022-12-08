@@ -23,7 +23,6 @@ public class Application {
     private JPanel panel;
     private JButton ovalBtn;
     private JButton lineSegmentBtn;
-    private JButton squareBtn;
     private JButton rectangleBtn;
     private JButton colorizeBtn;
     private JPanel canvas;
@@ -100,7 +99,6 @@ public class Application {
 
         ovalBtn.addActionListener((e) -> create(new OvalCreator()));
         lineSegmentBtn.addActionListener((e) -> create(new LineSegmentCreator()));
-        squareBtn.addActionListener((e) -> create(new SquareCreator()));
         rectangleBtn.addActionListener((e) -> create(new RectangleCreator()));
         triangleBtn.addActionListener((e) -> create(new TriangleCreator()));
 

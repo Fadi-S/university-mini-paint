@@ -41,6 +41,7 @@ public class PropertiesForm {
             shapeCreator.setColor(color);
         });
 
+        fillColorBtn.setVisible(shapeCreator.get("outlineOnly") != 1);
         fillColorBtn.setUI(new ColorPicker.CustomButton());
         fillColorBtn.setForeground(Color.black);
         fillColorBtn.addActionListener((e) -> {

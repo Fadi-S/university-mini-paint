@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class LineSegment extends AbstractShapeClass {
 
-    private final Point point1;
-    private final Point point2;
+    private Point point1;
+    private Point point2;
 
     public LineSegment(Point point1, Point point2) {
         super(new Point(

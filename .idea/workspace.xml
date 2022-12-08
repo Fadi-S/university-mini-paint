@@ -5,23 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c768442-29c3-43ad-8b55-0156ed07d69f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json-simple-2.1.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/backend/interfaces/Savable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab7.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Lab7.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/Resizable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/Resizable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/interfaces/ShapesChangedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/interfaces/ShapesChangedListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/AbstractShapeClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/AbstractShapeClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/LineSegment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Oval.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/shapes/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/shapes/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/Triangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backend/shapes/creator/LineSegmentCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/shapes/creator/LineSegmentCreator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/Canvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/PropertiesForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +148,7 @@
       <workItem from="1670181690797" duration="25661000" />
       <workItem from="1670264328241" duration="3247000" />
       <workItem from="1670320552508" duration="1237000" />
-      <workItem from="1670433609229" duration="30955000" />
+      <workItem from="1670433609229" duration="36042000" />
     </task>
     <servers />
   </component>
