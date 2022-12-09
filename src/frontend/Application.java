@@ -313,9 +313,7 @@ public class Application {
             return;
         }
 
-        try {
-            Scanner scanner = new Scanner(file);
-
+        try (Scanner scanner = new Scanner(file)) {
             StringBuilder json = new StringBuilder();
             while (scanner.hasNextLine()) {
                 json.append(scanner.nextLine());
