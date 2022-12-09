@@ -1,13 +1,14 @@
 package backend.shapes;
 
+import backend.interfaces.Shape;
 import org.json.simple.JsonObject;
 
 import java.awt.*;
 
 public class LineSegment extends AbstractShapeClass {
 
-    private Point point1;
-    private Point point2;
+    protected Point point1;
+    protected Point point2;
 
     public LineSegment(Point point1, Point point2) {
         super(new Point(
@@ -106,6 +107,15 @@ public class LineSegment extends AbstractShapeClass {
         );
 
         return p;
+    }
+
+    public Shape clone() {
+        LineSegment line = (LineSegment) super.clone();
+
+        line.point1 = new Point(line.point1.x, line.point1.y);
+        line.point2 = new Point(line.point2.x, line.point2.y);
+
+        return line;
     }
 
     @Override

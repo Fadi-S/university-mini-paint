@@ -161,6 +161,17 @@ public abstract class AbstractShapeClass implements Shape {
             ));
     }
 
+    private int degree;
+
+    public void rotate(int degree)
+    {
+        this.degree = degree;
+    }
+
+    public int getDegree() {
+        return degree;
+    }
+
     public Shape clone() {
         try {
             AbstractShapeClass clonedShape = (AbstractShapeClass) super.clone();

@@ -168,6 +168,16 @@ public class Triangle extends AbstractShapeClass {
         return json;
     }
 
+    public Shape clone() {
+        Triangle triangle = (Triangle) super.clone();
+
+        triangle.point1 = new Point(triangle.point1.x, triangle.point1.y);
+        triangle.point2 = new Point(triangle.point2.x, triangle.point2.y);
+        triangle.point3 = new Point(triangle.point3.x, triangle.point3.y);
+
+        return triangle;
+    }
+
     @Override
     public void fromJSON(JsonObject json) {
         super.fromJSON(json);

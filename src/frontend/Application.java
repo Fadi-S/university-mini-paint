@@ -35,6 +35,7 @@ public class Application {
     private JPanel shapesButtonsPanel;
     private JButton triangleBtn;
     private JButton copyBtn;
+    private JCheckBox selectSmallerCheck;
 
     private final Canvas canvasEngine = new Canvas();
 
@@ -61,6 +62,15 @@ public class Application {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
 
+        JMenuItem newFileItem = new JMenuItem("New", KeyEvent.VK_N);
+        newFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+        newFileItem.getAccessibleContext().setAccessibleDescription(
+                "New canvas");
+        newFileItem.addActionListener((e) -> {
+            canvasEngine.removeAll();
+            selectedFile = null;
+        });
+
         JMenuItem saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
         saveMenuItem.getAccessibleContext().setAccessibleDescription(
@@ -81,6 +91,7 @@ public class Application {
         loadMenuItem.addActionListener(this::load);
 
 
+        menu.add(newFileItem);
         menu.add(saveMenuItem);
         menu.add(saveAsMenuItem);
         menu.add(loadMenuItem);
@@ -173,7 +184,7 @@ public class Application {
                 resizingBy = getCornerPoint(e.getPoint());
                 if(resizingBy != null) return;
 
-                select(canvasEngine.getShapeAtPoint(e.getPoint()));
+                select(canvasEngine.getShapeAtPoint(e.getPoint(), selectSmallerCheck.isSelected()));
 
                 if(selectedShape != null) {
                     selectedShape.setDraggingPoint(e.getPoint());

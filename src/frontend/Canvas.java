@@ -12,6 +12,8 @@ import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class Canvas extends JPanel implements DrawingEngine {
     private Shape selectedShape;
@@ -83,19 +85,23 @@ public class Canvas extends JPanel implements DrawingEngine {
         return shapes.toArray(Shape[]::new);
     }
 
-    public Shape getShapeAtPoint(Point point)
+    public Shape getShapeAtPoint(Point point, boolean chooseMinimum)
     {
-        Shape[] selectedShapes = shapes.stream()
-                .filter((shape) -> shape.contains(point))
-//                .min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
-                .toArray(Shape[]::new);
+        Stream<Shape> shapeStream =  shapes.stream()
+                .filter((shape) -> shape.contains(point));
+
+        if(chooseMinimum) {
+            return shapeStream.min(Comparator.comparing((shape) -> ((AbstractShapeClass) shape).area()))
+                    .orElse(null);
+        }
+
+        Shape[] selectedShapes = shapeStream.toArray(Shape[]::new);
 
         if(selectedShapes.length == 0) {
             return null;
         }
 
         return selectedShapes[selectedShapes.length-1];
-
     }
 
     public void setSelectedShape(Shape selectedShape) {
