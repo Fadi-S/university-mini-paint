@@ -161,21 +161,14 @@ public abstract class AbstractShapeClass implements Shape {
             ));
     }
 
-    private int degree;
-
-    public void rotate(int degree)
-    {
-        this.degree = degree;
-    }
-
-    public int getDegree() {
-        return degree;
-    }
-
     public Shape clone() {
         try {
             AbstractShapeClass clonedShape = (AbstractShapeClass) super.clone();
             clonedShape.seed = String.format("%02d", key++);
+
+            Point corner = points()[0];
+
+            clonedShape.resize(corner, new Point(corner.x+2, corner.y+2));
 
             return clonedShape;
         } catch (CloneNotSupportedException e) {

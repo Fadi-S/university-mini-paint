@@ -103,7 +103,7 @@ public class Oval extends AbstractShapeClass {
 
     @Override
     public String toString() {
-        return "circle-" + seed;
+        return "oval-" + seed;
     }
 
     public double area() {
